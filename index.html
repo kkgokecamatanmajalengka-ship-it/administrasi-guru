@@ -173,6 +173,23 @@
         <div id="kepsekDashboard" class="hidden fade-in">
             <div class="section-header" style="margin-bottom:1.25rem;"><div><div class="section-title">Dashboard Kepala Sekolah</div><div class="section-subtitle">Review dan kelola dokumen ATP dari guru</div></div></div>
             <div class="card"><div class="section-header" style="margin-bottom:0.75rem;"><div class="section-title" style="font-size:0.95rem;"><i class="fas fa-file-alt" style="color:var(--accent);margin-right:6px;"></i> Review Dokumen ATP</div></div><div class="filter-box"><div class="form-group" style="flex:1;min-width:120px;margin-bottom:0;"><label style="font-size:0.78rem;">Jenis Guru</label><select id="kepsekFilterJenis" class="form-control" onchange="loadKepsekTable()"><option value="">Semua</option><option value="kelas">Guru Kelas</option><option value="pjok">Guru PJOK</option><option value="pai">Guru PAI</option></select></div><div class="form-group" style="flex:1;min-width:120px;margin-bottom:0;"><label style="font-size:0.78rem;">Kelas</label><select id="kepsekFilterKelas" class="form-control" onchange="loadKepsekTable()"><option value="">Semua</option><option value="1">Kelas 1</option><option value="2">Kelas 2</option><option value="3">Kelas 3</option><option value="4">Kelas 4</option><option value="5">Kelas 5</option><option value="6">Kelas 6</option></select></div><div class="form-group" style="flex:2;min-width:180px;margin-bottom:0;"><label style="font-size:0.78rem;">Mapel</label><select id="kepsekFilterMapel" class="form-control" onchange="loadKepsekTable()"><option value="">Semua</option><option value="Pendidikan Pancasila">Pendidikan Pancasila</option><option value="Bahasa Indonesia">Bahasa Indonesia</option><option value="Matematika">Matematika</option><option value="IPAS">IPAS</option><option value="Seni Budaya">Seni Budaya</option><option value="Pendidikan Jasmani">PJOK</option><option value="Bahasa Sunda">Bahasa Sunda</option><option value="Bahasa Inggris">Bahasa Inggris</option><option value="Pendidikan Agama Islam">PAI</option></select></div></div><div style="overflow-x:auto;"><table><thead><tr><th>Guru</th><th>Jenis</th><th>Mapel</th><th>Kelas</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="kepsekTableBody"></tbody></table></div></div>
+            
+            <!-- MODAL EDIT GURU OLEH KEPSEK -->
+            <div id="kepsekEditGuruModal" class="modal-overlay hidden">
+                <div class="modal-content" style="max-width:600px;">
+                    <div class="section-header" style="margin-bottom:1.5rem;"><div class="section-title"><i class="fas fa-user-edit" style="color:var(--accent);margin-right:8px;"></i> Edit Data Guru</div></div>
+                    <input type="hidden" id="editGuruId">
+                    <div class="form-group"><label>Nama Lengkap</label><input type="text" id="editGuruName" class="form-control"></div>
+                    <div class="form-group"><label>Username</label><input type="text" id="editGuruUsername" class="form-control" disabled></div>
+                    <div class="form-group"><label>Jenis Guru</label><select id="editGuruJenis" class="form-control"><option value="kelas">Guru Kelas</option><option value="pjok">Guru PJOK</option><option value="pai">Guru PAI</option></select></div>
+                    <div class="form-group"><label>Password Baru (Kosongkan jika tidak diubah)</label><input type="text" id="editGuruPass" class="form-control"></div>
+                    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:1.5rem;">
+                        <button class="btn btn-ghost" onclick="closeEditGuruModal()"><i class="fas fa-times"></i> Batal</button>
+                        <button class="btn btn-success" onclick="saveEditedGuru()"><i class="fas fa-save"></i> SIMPAN PERUBAHAN</button>
+                    </div>
+                </div>
+            </div>
+
             <div class="card"><div class="section-header" style="margin-bottom:0.75rem;"><div class="section-title" style="font-size:0.95rem;"><i class="fas fa-users-cog" style="color:var(--accent);margin-right:6px;"></i> Manajemen Akun Guru</div></div><div style="overflow-x:auto;"><table><thead><tr><th>Nama Guru</th><th>Username</th><th>Jenis Guru</th><th>Aksi</th></tr></thead><tbody id="kepsekUserTableBody"></tbody></table></div></div>
         </div>
         <!-- PENGAWAS DASHBOARD -->
@@ -326,7 +343,7 @@
             });
         }
 
-        /* ========= GURU: TABEL APPROVED (DENGAN TOMBOL RPM) ========= */
+        /* ========= GURU: TABEL APPROVED ========= */
         window.renderApprovedTable=function(){
             const fK=document.getElementById('filterKelasAppr').value,fM=document.getElementById('filterMapelAppr').value,tb=document.getElementById('approvedTableBody');tb.innerHTML='';
             if(allApprovedATP.length===0){tb.innerHTML=`<tr><td colspan="5" style="text-align:center;color:var(--fg-muted);padding:1.5rem;">Belum ada ATP yang disetujui.</td></tr>`;return;}
@@ -412,7 +429,6 @@
             document.getElementById('rpmPenutup').value='Guru dan peserta didik membuat kesimpulan bersama. Guru melakukan refleksi pembelajaran.';
             document.getElementById('rpmAsesmen').value='1. Diagnostik: Tanya jawab. 2. Formatif: Observasi & presentasi. 3. Sumatif: Tes tertulis.';
             
-            // Render TP Checkboxes
             const tpc=document.getElementById('tpCheckListContainer');tpc.innerHTML='';
             if(atp.tps&&Array.isArray(atp.tps)){
                 atp.tps.forEach((tp,i)=>{
@@ -525,6 +541,7 @@
                 rawSubmissions=snap.val()||{};loadKepsekTable();
             });
         }
+        
         window.loadKepsekTable=function(){
             const fJ=document.getElementById('kepsekFilterJenis').value,fK=document.getElementById('kepsekFilterKelas').value,fM=document.getElementById('kepsekFilterMapel').value;
             const tb=document.getElementById('kepsekTableBody');tb.innerHTML='';
@@ -557,6 +574,7 @@
             if(!currentSubmissionId)return;btnLoading('btnApprove',true);
             try{await update(ref(db,`submissions/${currentSubmissionId.u}/${currentSubmissionId.id}`),{status:'approved'});await set(ref(db,`notifications/${currentSubmissionId.u}`),{message:`ATP Anda telah disetujui pada ${new Date().toLocaleString('id-ID')}`});showToast('ATP disetujui!');closeModal();}catch(e){showToast('Gagal','error');}finally{btnLoading('btnApprove',false);}
         };
+        
         window.rejectSubmission=async function(){
             if(!currentSubmissionId)return;btnLoading('btnReject',true);
             try{await update(ref(db,`submissions/${currentSubmissionId.u}/${currentSubmissionId.id}`),{status:'rejected'});await set(ref(db,`notifications/${currentSubmissionId.u}`),{message:`ATP Anda ditolak, mohon revisi pada ${new Date().toLocaleString('id-ID')}`});showToast('ATP ditolak!');closeModal();}catch(e){showToast('Gagal','error');}finally{btnLoading('btnReject',false);}
@@ -567,11 +585,38 @@
                 rawUsers=snap.val()||{};const tb=document.getElementById('kepsekUserTableBody');tb.innerHTML='';
                 Object.keys(rawUsers).filter(k=>rawUsers[k].role==='guru'&&rawUsers[k].npsn==currentUser.npsn).forEach(k=>{
                     const u=rawUsers[k];
-                    tb.innerHTML+=`<tr><td>${u.fullname}</td><td>${u.username}</td><td>${u.jenisGuru=='pjok'?'PJOK':(u.jenisGuru=='pai'?'PAI':'Kelas')}</td><td><button class="btn btn-danger btn-sm" onclick="delUser('${k}')"><i class="fas fa-trash"></i></button></td></tr>`;
+                    tb.innerHTML+=`<tr><td>${u.fullname}</td><td>${u.username}</td><td>${u.jenisGuru=='pjok'?'PJOK':(u.jenisGuru=='pai'?'PAI':'Kelas')}</td><td><button class="btn btn-warning btn-sm" onclick="openEditGuruModal('${k}')"><i class="fas fa-edit"></i></button> <button class="btn btn-danger btn-sm" onclick="delUser('${k}')"><i class="fas fa-trash"></i></button></td></tr>`;
                 });
                 if(tb.innerHTML==='')tb.innerHTML=`<tr><td colspan="4" style="text-align:center;color:var(--fg-muted);padding:1.5rem;">Belum ada guru.</td></tr>`;
             });
         }
+
+        window.openEditGuruModal=function(u){
+            const usr=rawUsers[u];
+            document.getElementById('editGuruId').value=u;
+            document.getElementById('editGuruName').value=usr.fullname;
+            document.getElementById('editGuruUsername').value=usr.username;
+            document.getElementById('editGuruJenis').value=usr.jenisGuru||'kelas';
+            document.getElementById('editGuruPass').value='';
+            document.getElementById('kepsekEditGuruModal').classList.remove('hidden');
+        };
+        window.closeEditGuruModal=()=>document.getElementById('kepsekEditGuruModal').classList.add('hidden');
+
+        window.saveEditedGuru=async function(){
+            const u=document.getElementById('editGuruId').value;
+            const name=document.getElementById('editGuruName').value;
+            const jenis=document.getElementById('editGuruJenis').value;
+            const pass=document.getElementById('editGuruPass').value;
+            if(!name){showToast('Nama tidak boleh kosong','error');return;}
+            let data={fullname:name,jenisGuru:jenis};
+            if(pass)data.password=pass;
+            try{
+                await update(ref(db,`users/${u}`),data);
+                showToast('Data guru diperbarui!');
+                closeEditGuruModal();
+            }catch(e){showToast('Gagal: '+e.message,'error');}
+        };
+
         window.delUser=async function(u){if(confirm(`Hapus ${u}?`)){await remove(ref(db,`users/${u}`));await remove(ref(db,`submissions/${u}`));showToast('User dihapus');}};
 
         /* ========= PENGAWAS ========= */
