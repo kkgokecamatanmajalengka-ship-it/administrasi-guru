@@ -49,15 +49,14 @@
         .workflow-step.active{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 30px var(--accent-glow);}
         table{width:100%;border-collapse:separate;border-spacing:0;margin-top:0.75rem;}
         th,td{padding:11px 14px;text-align:left;font-size:0.83rem;border-bottom:1px solid var(--border);}
-        thead th{background:var(--bg-elevated);font-weight:700;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--fg-muted);border-bottom:1px solid var(--border);}
+        thead th{background:var(--bg-elevated);font-weight:700;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--fg-muted);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:2;}
         thead th:first-child{border-radius:var(--radius-sm) 0 0 0;}thead th:last-child{border-radius:0 var(--radius-sm) 0 0;}
         tbody tr{transition:background var(--transition);}tbody tr:hover{background:var(--bg-card-hover);}tbody tr:last-child td{border-bottom:none;}
-        
-        /* PERBAIKAN SCROLL DOBEL */
-        .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);display:flex;justify-content:center;align-items:flex-start;z-index:1000;padding:2rem 1rem;overflow-y:auto;}
-        .modal-content{background:var(--bg-card);width:100%;max-width:900px;padding:2rem;border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow-lg);animation:modalIn 0.35s cubic-bezier(0.16,1,0.3,1);margin:auto;}
+        .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);display:flex;justify-content:center;align-items:flex-start;z-index:1000;overflow-y:auto;}
+        .modal-content{background:var(--bg-card);width:100%;max-width:900px;padding:0;border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow-lg);animation:modalIn 0.35s cubic-bezier(0.16,1,0.3,1);margin:2rem auto;overflow:hidden;}
+        .modal-body{padding:2rem;overflow-y:auto;max-height:calc(100vh - 6rem);}
+        .modal-footer{padding:1rem 2rem;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;background:var(--bg-elevated);position:sticky;bottom:0;z-index:3;}
         @keyframes modalIn{from{transform:translateY(30px) scale(0.97);opacity:0;}to{transform:translateY(0) scale(1);opacity:1;}}
-        
         .setup-box{background:var(--warning-soft);border:1px solid rgba(253,203,110,0.2);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;}
         .rejected-box{background:var(--danger-soft);border:1px solid rgba(255,118,117,0.2);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem;}
         .status-table{width:100%;border:none;margin:0;}.status-table td{border:none;padding:0;vertical-align:middle;}
@@ -88,7 +87,7 @@
         .submit-area{text-align:right;margin-top:1.5rem;padding:1rem 1.25rem;background:var(--warning-soft);border:1px solid rgba(253,203,110,0.15);border-radius:var(--radius-sm);}
         .tp-row{display:flex;gap:10px;margin-bottom:10px;align-items:center;}.tp-row .tp-input{flex:1;}.tp-row .sem-select{width:120px;flex-shrink:0;}
         .tp-remove{width:36px;height:36px;flex-shrink:0;background:var(--danger-soft);color:var(--danger);border:1px solid rgba(255,118,117,0.15);border-radius:var(--radius-xs);cursor:pointer;font-size:0.9rem;transition:all var(--transition);display:flex;align-items:center;justify-content:center;}.tp-remove:hover{background:var(--danger);color:#fff;}
-        .rpm-tabs{display:flex;gap:8px;margin-bottom:1.5rem;border-bottom:1px solid var(--border);padding-bottom:12px;}
+        .rpm-tabs{display:flex;gap:8px;margin-bottom:0;border-bottom:1px solid var(--border);padding:12px 2rem 12px;background:var(--bg-elevated);position:sticky;top:0;z-index:3;}
         .rpm-section-label{color:var(--accent);font-size:0.9rem;font-weight:700;border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:1rem;}
         .tp-check-list{display:flex;flex-direction:column;gap:8px;max-height:220px;overflow-y:auto;padding-right:4px;}
         .tp-check-item{display:flex;align-items:flex-start;gap:12px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;cursor:pointer;transition:all var(--transition);user-select:none;}
@@ -119,11 +118,36 @@
         .kop-surat{text-align:center;border-bottom:3px double #000;padding-bottom:12px;margin-bottom:20px;}
         .kop-surat .kop-nama{font-size:16pt;font-weight:bold;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px;}
         .kop-surat .kop-npsn{font-size:10pt;margin-bottom:4px;}.kop-surat .kop-alamat{font-size:9pt;font-style:italic;margin-bottom:4px;}.kop-surat .kop-kontak{font-size:8pt;}
-        @media(max-width:768px){.stat-grid{grid-template-columns:1fr;}header{padding:0.7rem 1rem;}.container{padding:0 0.75rem;}.auth-card{margin:2rem auto;padding:1.5rem 1.25rem;}.modal-overlay{padding:1rem;}.modal-content{padding:1.25rem;}.school-identity{display:none;}.user-pill span{display:none;}.kop-grid{grid-template-columns:1fr;}}
+        .confirm-dialog{text-align:center;padding:1.5rem 0;}
+        .confirm-dialog .confirm-icon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.5rem;}
+        .confirm-dialog .confirm-icon.danger{background:var(--danger-soft);color:var(--danger);}
+        .confirm-dialog .confirm-icon.success{background:var(--success-soft);color:var(--success);}
+        .confirm-dialog h3{font-size:1.1rem;font-weight:800;margin-bottom:0.5rem;}
+        .confirm-dialog p{color:var(--fg-muted);font-size:0.88rem;margin-bottom:1.5rem;}
+        .approval-card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.25rem;margin-bottom:1rem;transition:all var(--transition);}
+        .approval-card:hover{border-color:var(--border-light);}
+        .approval-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;flex-wrap:wrap;gap:8px;}
+        .approval-card-title{font-weight:700;font-size:0.95rem;color:var(--fg);}
+        .approval-card-meta{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:1rem;font-size:0.82rem;color:var(--fg-muted);}
+        .approval-card-meta span{display:flex;align-items:center;gap:5px;}
+        .approval-card-meta i{color:var(--fg-dim);font-size:0.75rem;}
+        .approval-card-section{margin-bottom:0.75rem;}
+        .approval-card-section h4{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--fg-dim);font-weight:700;margin-bottom:0.4rem;}
+        .approval-card-section p{font-size:0.88rem;color:var(--fg);line-height:1.6;white-space:pre-wrap;}
+        .approval-card-tp{list-style:none;padding:0;margin:0;}
+        .approval-card-tp li{padding:6px 0 6px 20px;position:relative;font-size:0.88rem;color:var(--fg);border-bottom:1px solid var(--border);}
+        .approval-card-tp li:last-child{border-bottom:none;}
+        .approval-card-tp li::before{content:'';position:absolute;left:0;top:13px;width:8px;height:8px;border-radius:50%;background:var(--accent);}
+        .approval-card-actions{display:flex;gap:8px;justify-content:flex-end;padding-top:1rem;border-top:1px solid var(--border);margin-top:0.5rem;}
+        .pengawas-stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0.75rem;margin-bottom:1.25rem;}
+        @media(max-width:768px){.stat-grid{grid-template-columns:1fr;}header{padding:0.7rem 1rem;}.container{padding:0 0.75rem;}.auth-card{margin:2rem auto;padding:1.5rem 1.25rem;}.modal-content{margin:0.5rem;}.modal-body{padding:1.25rem;max-height:calc(100vh - 2rem);}.modal-footer{padding:0.75rem 1.25rem;}.school-identity{display:none;}.user-pill span{display:none;}.kop-grid{grid-template-columns:1fr;}.approval-card-header{flex-direction:column;}.approval-card-actions{flex-direction:column;}.approval-card-actions .btn{width:100%;justify-content:center;}}
         .fade-in{animation:fadeIn 0.4s ease;}@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
         .pulse-dot{width:8px;height:8px;background:var(--warning);border-radius:50%;display:inline-block;animation:pulse 1.5s ease infinite;}@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.8);}}
         .loading-spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.6s linear infinite;}@keyframes spin{to{transform:rotate(360deg);}}
         .table-responsive{overflow-x:auto;}
+        .empty-state{text-align:center;padding:2.5rem 1rem;color:var(--fg-dim);}
+        .empty-state i{font-size:2rem;margin-bottom:0.75rem;display:block;}
+        .empty-state p{font-size:0.88rem;}
     </style>
 </head>
 <body>
@@ -171,83 +195,113 @@
                     <div class="submit-area"><button class="btn btn-primary" id="btnSubmit" onclick="submitToKepsek()"><i class="fas fa-paper-plane"></i> AJUKAN KE KEPALA SEKOLAH</button></div>
                 </div>
             </div>
-            <div class="approved-section"><div class="section-header"><div><div class="section-title"><i class="fas fa-check-circle"></i> Dokumen ATP Disetujui</div><div class="section-subtitle">Buat RPM dari ATP disetujui. Dokumen yang disetujui tidak dapat diedit.</div></div></div><div class="filter-box success-filter"><div class="form-group" style="flex:1;min-width:150px;margin-bottom:0;"><label style="font-size:0.78rem;">Filter Kelas</label><select id="filterKelasAppr" class="form-control" onchange="renderApprovedTable()"></select></div><div class="form-group" style="flex:2;min-width:200px;margin-bottom:0;"><label style="font-size:0.78rem;">Filter Mapel</label><select id="filterMapelAppr" class="form-control" onchange="renderApprovedTable()"></select></div></div><div class="table-responsive"><table><thead><tr><th>Mapel</th><th>Kelas</th><th>Topik / Materi</th><th>Buku Sumber</th><th>Aksi</th></tr></thead><tbody id="approvedTableBody"></tbody></table></div></div>
-            
-            <!-- BAGIAN ARSIP RPM TERSIMPAN -->
-            <div class="history-section" style="border-color:var(--success);background:var(--success-soft);">
-                <div class="section-header"><div><div class="section-title" style="color:var(--success);"><i class="fas fa-folder-open"></i> Arsip RPM Tersimpan</div><div class="section-subtitle">Akses, edit, dan cetak kembali RPM yang sudah dibuat</div></div></div>
-                <div class="table-responsive" style="background:var(--bg-card);border-radius:var(--radius-sm);padding:1rem;border:1px solid var(--border);">
-                    <table><thead><tr><th>Mapel</th><th>Kelas</th><th>Materi RPM</th><th>Aksi</th></tr></thead><tbody id="rpmSavedTableBody"></tbody></table>
-                </div>
-            </div>
-
+            <div class="approved-section"><div class="section-header"><div><div class="section-title"><i class="fas fa-check-circle"></i> Dokumen ATP Disetujui</div><div class="section-subtitle">Buat RPM dari ATP disetujui</div></div></div><div class="filter-box success-filter"><div class="form-group" style="flex:1;min-width:150px;margin-bottom:0;"><label style="font-size:0.78rem;">Filter Kelas</label><select id="filterKelasAppr" class="form-control" onchange="renderApprovedTable()"></select></div><div class="form-group" style="flex:2;min-width:200px;margin-bottom:0;"><label style="font-size:0.78rem;">Filter Mapel</label><select id="filterMapelAppr" class="form-control" onchange="renderApprovedTable()"></select></div></div><div class="table-responsive"><table><thead><tr><th>Mapel</th><th>Kelas</th><th>Topik / Materi</th><th>Buku Sumber</th><th>Aksi</th></tr></thead><tbody id="approvedTableBody"></tbody></table></div></div>
+            <div class="history-section" style="border-color:var(--success);background:var(--success-soft);"><div class="section-header"><div><div class="section-title" style="color:var(--success);"><i class="fas fa-folder-open"></i> Arsip RPM Tersimpan</div><div class="section-subtitle">Akses dan cetak kembali RPM yang sudah dibuat</div></div></div><div class="table-responsive" style="background:var(--bg-card);border-radius:var(--radius-sm);padding:1rem;border:1px solid var(--border);"><table><thead><tr><th>Mapel</th><th>Kelas</th><th>Materi RPM</th><th>Aksi</th></tr></thead><tbody id="rpmSavedTableBody"></tbody></table></div></div>
             <div class="history-section"><div class="section-header"><div><div class="section-title"><i class="fas fa-history" style="color:var(--fg-muted);margin-right:6px;"></i> Riwayat Pengajuan ATP</div><div class="section-subtitle">Semua status pengajuan</div></div></div><div class="filter-box"><div class="form-group" style="flex:1;min-width:150px;margin-bottom:0;"><label style="font-size:0.78rem;">Filter Kelas</label><select id="filterKelas" class="form-control" onchange="filterRiwayat()"></select></div><div class="form-group" style="flex:2;min-width:200px;margin-bottom:0;"><label style="font-size:0.78rem;">Filter Mapel</label><select id="filterMapel" class="form-control" onchange="filterRiwayat()"></select></div></div><div class="table-responsive"><table><thead><tr><th>Mapel</th><th>Kelas</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="riwayatTableBody"></tbody></table></div></div>
         </div>
         <!-- KEPSEK DASHBOARD -->
         <div id="kepsekDashboard" class="hidden fade-in">
             <div class="section-header" style="margin-bottom:1.25rem;"><div><div class="section-title">Dashboard Kepala Sekolah</div><div class="section-subtitle">Review dan kelola dokumen ATP dari guru</div></div></div>
             <div class="card"><div class="section-header" style="margin-bottom:0.75rem;"><div class="section-title" style="font-size:0.95rem;"><i class="fas fa-file-alt" style="color:var(--accent);margin-right:6px;"></i> Review Dokumen ATP</div></div><div class="filter-box"><div class="form-group" style="flex:1;min-width:120px;margin-bottom:0;"><label style="font-size:0.78rem;">Jenis Guru</label><select id="kepsekFilterJenis" class="form-control" onchange="loadKepsekTable()"><option value="">Semua</option><option value="kelas">Guru Kelas</option><option value="pjok">Guru PJOK</option><option value="pai">Guru PAI</option></select></div><div class="form-group" style="flex:1;min-width:120px;margin-bottom:0;"><label style="font-size:0.78rem;">Kelas</label><select id="kepsekFilterKelas" class="form-control" onchange="loadKepsekTable()"><option value="">Semua</option><option value="1">Kelas 1</option><option value="2">Kelas 2</option><option value="3">Kelas 3</option><option value="4">Kelas 4</option><option value="5">Kelas 5</option><option value="6">Kelas 6</option></select></div><div class="form-group" style="flex:2;min-width:180px;margin-bottom:0;"><label style="font-size:0.78rem;">Mapel</label><select id="kepsekFilterMapel" class="form-control" onchange="loadKepsekTable()"><option value="">Semua</option><option value="Pendidikan Pancasila">Pendidikan Pancasila</option><option value="Bahasa Indonesia">Bahasa Indonesia</option><option value="Matematika">Matematika</option><option value="IPAS">IPAS</option><option value="Seni Budaya">Seni Budaya</option><option value="Pendidikan Jasmani">PJOK</option><option value="Bahasa Sunda">Bahasa Sunda</option><option value="Bahasa Inggris">Bahasa Inggris</option><option value="Pendidikan Agama Islam">PAI</option></select></div></div><div class="table-responsive"><table><thead><tr><th>Guru</th><th>Jenis</th><th>Mapel</th><th>Kelas</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="kepsekTableBody"></tbody></table></div></div>
-            
-            <div id="kepsekEditGuruModal" class="modal-overlay hidden">
-                <div class="modal-content" style="max-width:600px;">
-                    <div class="section-header" style="margin-bottom:1.5rem;"><div class="section-title"><i class="fas fa-user-edit" style="color:var(--accent);margin-right:8px;"></i> Edit Data Guru</div></div>
-                    <input type="hidden" id="editGuruId">
-                    <div class="form-group"><label>Nama Lengkap</label><input type="text" id="editGuruName" class="form-control"></div>
-                    <div class="form-group"><label>Username</label><input type="text" id="editGuruUsername" class="form-control" disabled></div>
-                    <div class="form-group"><label>Jenis Guru</label><select id="editGuruJenis" class="form-control"><option value="kelas">Guru Kelas</option><option value="pjok">Guru PJOK</option><option value="pai">Guru PAI</option></select></div>
-                    <div class="form-group"><label>Password Baru (Kosongkan jika tidak diubah)</label><input type="text" id="editGuruPass" class="form-control"></div>
-                    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:1.5rem;">
-                        <button class="btn btn-ghost" onclick="closeEditGuruModal()"><i class="fas fa-times"></i> Batal</button>
-                        <button class="btn btn-success" onclick="saveEditedGuru()"><i class="fas fa-save"></i> SIMPAN PERUBAHAN</button>
-                    </div>
-                </div>
-            </div>
-
             <div class="card"><div class="section-header" style="margin-bottom:0.75rem;"><div class="section-title" style="font-size:0.95rem;"><i class="fas fa-users-cog" style="color:var(--accent);margin-right:6px;"></i> Manajemen Akun Guru</div></div><div class="table-responsive"><table><thead><tr><th>Nama Guru</th><th>Username</th><th>Jenis Guru</th><th>Aksi</th></tr></thead><tbody id="kepsekUserTableBody"></tbody></table></div></div>
         </div>
         <!-- PENGAWAS DASHBOARD -->
         <div id="pengawasDashboard" class="hidden fade-in">
-            <div class="section-header" style="margin-bottom:1.25rem;"><div><div class="section-title">Dashboard Pengawas</div><div class="section-subtitle">Pantau seluruh pengguna terdaftar</div></div></div>
-            <div class="card"><div class="section-header" style="margin-bottom:0.75rem;"><div class="section-title" style="font-size:0.95rem;"><i class="fas fa-database" style="color:var(--accent);margin-right:6px;"></i> Semua Pengguna</div></div><div class="table-responsive"><table><thead><tr><th>User</th><th>Nama</th><th>Sekolah</th></tr></thead><tbody id="pengawasTableBody"></tbody></table></div></div>
+            <div class="section-header" style="margin-bottom:1.25rem;"><div><div class="section-title">Dashboard Pengawas</div><div class="section-subtitle">Pantau seluruh sekolah dan persetujuan dokumen</div></div></div>
+            <div class="pengawas-stat-grid" id="pengawasStats"></div>
+            <div class="card"><div class="section-header" style="margin-bottom:0.75rem;"><div class="section-title" style="font-size:0.95rem;"><i class="fas fa-school" style="color:var(--accent);margin-right:6px;"></i> Daftar Sekolah Terdaftar</div></div><div class="table-responsive"><table><thead><tr><th>Nama Sekolah</th><th>NPSN</th><th>Jumlah Guru</th><th>ATP Pending</th><th>ATP Disetujui</th></tr></thead><tbody id="pengawasSekolahBody"></tbody></table></div></div>
+            <div class="card"><div class="section-header" style="margin-bottom:0.75rem;"><div class="section-title" style="font-size:0.95rem;"><i class="fas fa-users" style="color:var(--accent);margin-right:6px;"></i> Semua Pengguna</div></div><div class="table-responsive"><table><thead><tr><th>Nama</th><th>Username</th><th>Peran</th><th>Sekolah</th></tr></thead><tbody id="pengawasTableBody"></tbody></table></div></div>
+            <div class="card"><div class="section-header" style="margin-bottom:0.75rem;"><div class="section-title" style="font-size:0.95rem;"><i class="fas fa-clipboard-check" style="color:var(--success);margin-right:6px;"></i> Semua Pengajuan ATP (Semua Sekolah)</div></div><div class="filter-box success-filter"><div class="form-group" style="flex:1;min-width:140px;margin-bottom:0;"><label style="font-size:0.78rem;">Sekolah</label><select id="pwFilterSekolah" class="form-control" onchange="loadPengawasSubmissions()"><option value="">Semua Sekolah</option></select></div><div class="form-group" style="flex:1;min-width:120px;margin-bottom:0;"><label style="font-size:0.78rem;">Status</label><select id="pwFilterStatus" class="form-control" onchange="loadPengawasSubmissions()"><option value="">Semua Status</option><option value="pending">Pending</option><option value="approved">Disetujui</option><option value="rejected">Ditolak</option></select></div></div><div id="pengawasSubmissionsContainer"></div></div>
         </div>
     </div>
-    <!-- Preview Modal -->
-    <div id="previewModal" class="modal-overlay hidden"><div class="modal-content"><div class="section-header" style="margin-bottom:1.25rem;"><div class="section-title"><i class="fas fa-eye" style="color:var(--accent);margin-right:6px;"></i> Pratinjau ATP</div></div><div id="modalContent"></div><div style="text-align:right;margin-top:1.5rem;display:flex;gap:10px;justify-content:flex-end;"><button class="btn btn-ghost" onclick="closeModal()"><i class="fas fa-times"></i> Tutup</button><button class="btn btn-danger" id="btnReject" onclick="rejectSubmission()"><i class="fas fa-times-circle"></i> TOLAK</button><button class="btn btn-success" id="btnApprove" onclick="approveSubmission()"><i class="fas fa-check-circle"></i> SETUJUI</button></div></div></div>
-    
+
+    <!-- Preview Modal (Kepsek/Pengawas) -->
+    <div id="previewModal" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width:800px;">
+            <div class="modal-body" id="previewModalBody"></div>
+            <div class="modal-footer" id="previewModalFooter">
+                <button class="btn btn-ghost" onclick="closeModal()"><i class="fas fa-times"></i> Tutup</button>
+                <button class="btn btn-danger" id="btnReject" onclick="rejectSubmission()"><i class="fas fa-times-circle"></i> TOLAK</button>
+                <button class="btn btn-success" id="btnApprove" onclick="approveSubmission()"><i class="fas fa-check-circle"></i> SETUJUI</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Guru Modal -->
+    <div id="editGuruModal" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width:560px;">
+            <div class="modal-body">
+                <div class="section-header" style="margin-bottom:1.5rem;"><div class="section-title"><i class="fas fa-user-edit" style="color:var(--accent);margin-right:8px;"></i> Edit Data Guru</div></div>
+                <input type="hidden" id="editGuruId">
+                <div class="form-group"><label>Nama Lengkap</label><input type="text" id="editGuruName" class="form-control"></div>
+                <div class="form-group"><label>Username</label><input type="text" id="editGuruUsername" class="form-control" disabled style="opacity:0.5;"></div>
+                <div class="form-group"><label>Jenis Guru</label><select id="editGuruJenis" class="form-control"><option value="kelas">Guru Kelas</option><option value="pjok">Guru PJOK</option><option value="pai">Guru PAI</option></select></div>
+                <div class="form-group"><label>Password Baru (Kosongkan jika tidak diubah)</label><input type="text" id="editGuruPass" class="form-control" placeholder="Kosongkan jika tidak diubah"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeEditGuruModal()"><i class="fas fa-times"></i> Batal</button>
+                <button class="btn btn-success" onclick="saveEditedGuru()"><i class="fas fa-save"></i> SIMPAN PERUBAHAN</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Modal (Hapus Guru) -->
+    <div id="confirmModal" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width:420px;">
+            <div class="modal-body">
+                <div class="confirm-dialog">
+                    <div class="confirm-icon danger"><i class="fas fa-trash-alt"></i></div>
+                    <h3 id="confirmTitle">Hapus Guru?</h3>
+                    <p id="confirmMessage">Data guru akan dihapus secara permanen dan tidak dapat dikembalikan.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeConfirmModal()"><i class="fas fa-times"></i> Batal</button>
+                <button class="btn btn-danger" id="confirmActionBtn"><i class="fas fa-trash-alt"></i> Hapus</button>
+            </div>
+        </div>
+    </div>
+
     <!-- RPM Modal -->
     <div id="rpmModal" class="modal-overlay hidden">
         <div class="modal-content" style="max-width:900px;">
-            <div class="rpm-tabs" style="flex-shrink:0;"><button class="btn btn-primary" id="tabForm" onclick="switchRPMTab('form')"><i class="fas fa-edit"></i> 1. Isi Form RPM</button><button class="btn btn-ghost" id="tabPreview" onclick="switchRPMTab('preview')"><i class="fas fa-print"></i> 2. Pratinjau & Cetak</button></div>
-            
-            <div id="rpmFormArea" class="hidden">
-                <div class="rpm-section-label"><i class="fas fa-building"></i> Kop Surat (Muncul Saat Cetak)</div>
-                <div class="form-group"><label>Nama Sekolah</label><input type="text" id="kopNama" class="form-control" placeholder="SD NEGERI 1 CONTOH" oninput="updateKopPreview()"></div>
-                <div class="kop-grid"><div class="form-group" style="margin-bottom:0;"><label>NPSN</label><input type="text" id="kopNpsn" class="form-control" placeholder="12345678" oninput="updateKopPreview()"></div><div class="form-group" style="margin-bottom:0;"><label>Kecamatan / Kabupaten</label><input type="text" id="kopKecamatan" class="form-control" placeholder="Kec. Majalengka, Kab. Majalengka" oninput="updateKopPreview()"></div></div>
-                <div class="form-group"><label>Alamat Lengkap</label><input type="text" id="kopAlamat" class="form-control" placeholder="Jl. Raya Majalengka No. 1, Kode Pos 45418" oninput="updateKopPreview()"></div>
-                <div class="kop-grid"><div class="form-group" style="margin-bottom:0;"><label>Nomor Telepon</label><input type="text" id="kopTelp" class="form-control" placeholder="(0233) 123456" oninput="updateKopPreview()"></div><div class="form-group" style="margin-bottom:0;"><label>Email</label><input type="text" id="kopEmail" class="form-control" placeholder="sdn1contoh@gmail.com" oninput="updateKopPreview()"></div></div>
-                <div class="form-group"><label>Website</label><input type="text" id="kopWeb" class="form-control" placeholder="www.sdn1contoh.sch.id" oninput="updateKopPreview()"></div>
-                <div class="kop-preview-box"><div class="kp-title"><i class="fas fa-eye"></i> Pratinjau Kop Surat</div><div class="kop-preview-inner" id="kopPreviewInner"><div class="kp-nama" style="color:var(--fg-dim);">Nama sekolah akan muncul di sini...</div></div></div>
-                <div class="rpm-section-label" style="margin-top:1.5rem;"><i class="fas fa-id-card"></i> Identitas & Skenario Pembelajaran</div>
-                <div class="form-group"><label>Topik / Materi Pokok</label><input type="text" id="rpmMateri" class="form-control"></div>
-                <div class="form-group"><label>Alokasi Waktu (JP)</label><input type="text" id="rpmAlokasi" class="form-control" placeholder="Contoh: 2 x 45 Menit"></div>
-                <div class="form-group"><label>Tujuan Pembelajaran (Pilih TP dari ATP)</label><div class="tp-select-info"><i class="fas fa-info-circle"></i><span>Pilih satu atau beberapa Tujuan Pembelajaran.</span></div><div id="tpCheckListContainer" class="tp-check-list"></div><div class="tp-select-actions"><button class="btn btn-ghost btn-sm" onclick="toggleAllTP(true)"><i class="fas fa-check-double"></i> Pilih Semua</button><button class="btn btn-ghost btn-sm" onclick="toggleAllTP(false)"><i class="fas fa-times"></i> Batal Pilih Semua</button><span id="tpSelectedCount" style="font-size:0.78rem;color:var(--fg-dim);margin-left:auto;display:flex;align-items:center;"></span></div></div>
-                <div class="form-group"><label>Pendahuluan</label><textarea id="rpmPendahuluan" rows="2" class="form-control">Guru membuka kelas dengan salam, doa, dan mengecek kehadiran. Guru memberikan Apersepsi dan menyampaikan tujuan pembelajaran.</textarea></div>
-                <div class="form-group"><label>Kegiatan Inti</label><textarea id="rpmInti" rows="3" class="form-control">Stimulation: Mengamati tayangan. Problem Statement: Merumuskan masalah. Data Collection: Berdiskusi kelompok. Verification: Presentasi hasil diskusi.</textarea></div>
-                <div class="form-group"><label>Penutup</label><textarea id="rpmPenutup" rows="2" class="form-control">Guru dan peserta didik membuat kesimpulan bersama. Guru melakukan refleksi pembelajaran.</textarea></div>
-                <div class="form-group"><label>Asesmen</label><textarea id="rpmAsesmen" rows="2" class="form-control">1. Diagnostik: Tanya jawab. 2. Formatif: Observasi & presentasi. 3. Sumatif: Tes tertulis.</textarea></div>
-                <div class="rpm-section-label" style="margin-top:1.5rem;"><i class="fas fa-paperclip"></i> Lampiran RPM</div>
-                <div class="form-group"><label>1. Lampiran Materi Ajar & Sumber Belajar</label><textarea id="rpmLampMateri" rows="3" class="form-control"></textarea></div>
-                <div class="form-group"><label>2. Lampiran Media & Alat Pembelajaran</label><textarea id="rpmLampMedia" rows="3" class="form-control"></textarea></div>
-                <div class="form-group"><label>3. Lampiran LKPD</label><textarea id="rpmLampLKPD" rows="3" class="form-control"></textarea></div>
-                <div class="form-group"><label>4. Lampiran Instrumen Penilaian (Rubrik & Soal)</label><textarea id="rpmLampRubrik" rows="4" class="form-control"></textarea></div>
-                <div class="form-group"><label>5. Lembar Refleksi Guru</label><textarea id="rpmLampRefleksi" rows="3" class="form-control"></textarea></div>
-                <div style="display:flex;justify-content:space-between;margin-top:1.25rem;gap:10px;"><button class="btn btn-success" id="btnSaveRPM" onclick="saveRPM()"><i class="fas fa-save"></i> SIMPAN RPM</button><button class="btn btn-primary" onclick="generateRPM()">BUAT PRATINJAU RPM <i class="fas fa-arrow-right"></i></button></div>
+            <div class="rpm-tabs">
+                <button class="btn btn-primary" id="tabForm" onclick="switchRPMTab('form')"><i class="fas fa-edit"></i> 1. Isi Form RPM</button>
+                <button class="btn btn-ghost" id="tabPreview" onclick="switchRPMTab('preview')"><i class="fas fa-print"></i> 2. Pratinjau & Cetak</button>
             </div>
-            <div id="rpmPreviewArea" class="hidden">
-                <div style="text-align:right;margin-bottom:12px;display:flex;gap:10px;justify-content:flex-end;" class="no-print"><button class="btn btn-success" onclick="saveRPM()"><i class="fas fa-save"></i> SIMPAN RPM</button><button class="btn btn-primary" onclick="printRPM()"><i class="fas fa-print"></i> CETAK RPM</button></div>
-                <div id="printArea" class="rpm-container"></div>
+            <div class="modal-body" id="rpmModalBody">
+                <div id="rpmFormArea" class="hidden">
+                    <div class="rpm-section-label"><i class="fas fa-building"></i> Kop Surat (Muncul Saat Cetak)</div>
+                    <div class="form-group"><label>Nama Sekolah</label><input type="text" id="kopNama" class="form-control" placeholder="SD NEGERI 1 CONTOH" oninput="updateKopPreview()"></div>
+                    <div class="kop-grid"><div class="form-group" style="margin-bottom:0;"><label>NPSN</label><input type="text" id="kopNpsn" class="form-control" placeholder="12345678" oninput="updateKopPreview()"></div><div class="form-group" style="margin-bottom:0;"><label>Kecamatan / Kabupaten</label><input type="text" id="kopKecamatan" class="form-control" placeholder="Kec. Majalengka, Kab. Majalengka" oninput="updateKopPreview()"></div></div>
+                    <div class="form-group"><label>Alamat Lengkap</label><input type="text" id="kopAlamat" class="form-control" placeholder="Jl. Raya Majalengka No. 1" oninput="updateKopPreview()"></div>
+                    <div class="kop-grid"><div class="form-group" style="margin-bottom:0;"><label>Nomor Telepon</label><input type="text" id="kopTelp" class="form-control" placeholder="(0233) 123456" oninput="updateKopPreview()"></div><div class="form-group" style="margin-bottom:0;"><label>Email</label><input type="text" id="kopEmail" class="form-control" placeholder="sdn1contoh@gmail.com" oninput="updateKopPreview()"></div></div>
+                    <div class="form-group"><label>Website</label><input type="text" id="kopWeb" class="form-control" placeholder="www.sdn1contoh.sch.id" oninput="updateKopPreview()"></div>
+                    <div class="kop-preview-box"><div class="kp-title"><i class="fas fa-eye"></i> Pratinjau Kop Surat</div><div class="kop-preview-inner" id="kopPreviewInner"><div class="kp-nama" style="color:var(--fg-dim);">Nama sekolah akan muncul di sini...</div></div></div>
+                    <div class="rpm-section-label" style="margin-top:1.5rem;"><i class="fas fa-id-card"></i> Identitas & Skenario Pembelajaran</div>
+                    <div class="form-group"><label>Topik / Materi Pokok</label><input type="text" id="rpmMateri" class="form-control"></div>
+                    <div class="form-group"><label>Alokasi Waktu (JP)</label><input type="text" id="rpmAlokasi" class="form-control" placeholder="Contoh: 2 x 45 Menit"></div>
+                    <div class="form-group"><label>Tujuan Pembelajaran (Pilih TP dari ATP)</label><div class="tp-select-info"><i class="fas fa-info-circle"></i><span>Pilih satu atau beberapa Tujuan Pembelajaran.</span></div><div id="tpCheckListContainer" class="tp-check-list"></div><div class="tp-select-actions"><button class="btn btn-ghost btn-sm" onclick="toggleAllTP(true)"><i class="fas fa-check-double"></i> Pilih Semua</button><button class="btn btn-ghost btn-sm" onclick="toggleAllTP(false)"><i class="fas fa-times"></i> Batal Pilih Semua</button><span id="tpSelectedCount" style="font-size:0.78rem;color:var(--fg-dim);margin-left:auto;display:flex;align-items:center;"></span></div></div>
+                    <div class="form-group"><label>Pendahuluan</label><textarea id="rpmPendahuluan" rows="2" class="form-control">Guru membuka kelas dengan salam, doa, dan mengecek kehadiran. Guru memberikan Apersepsi dan menyampaikan tujuan pembelajaran.</textarea></div>
+                    <div class="form-group"><label>Kegiatan Inti</label><textarea id="rpmInti" rows="3" class="form-control">Stimulation: Mengamati tayangan. Problem Statement: Merumuskan masalah. Data Collection: Berdiskusi kelompok. Verification: Presentasi hasil diskusi.</textarea></div>
+                    <div class="form-group"><label>Penutup</label><textarea id="rpmPenutup" rows="2" class="form-control">Guru dan peserta didik membuat kesimpulan bersama. Guru melakukan refleksi pembelajaran.</textarea></div>
+                    <div class="form-group"><label>Asesmen</label><textarea id="rpmAsesmen" rows="2" class="form-control">1. Diagnostik: Tanya jawab. 2. Formatif: Observasi & presentasi. 3. Sumatif: Tes tertulis.</textarea></div>
+                    <div class="rpm-section-label" style="margin-top:1.5rem;"><i class="fas fa-paperclip"></i> Lampiran RPM</div>
+                    <div class="form-group"><label>1. Lampiran Materi Ajar & Sumber Belajar</label><textarea id="rpmLampMateri" rows="3" class="form-control"></textarea></div>
+                    <div class="form-group"><label>2. Lampiran Media & Alat Pembelajaran</label><textarea id="rpmLampMedia" rows="3" class="form-control"></textarea></div>
+                    <div class="form-group"><label>3. Lampiran LKPD</label><textarea id="rpmLampLKPD" rows="3" class="form-control"></textarea></div>
+                    <div class="form-group"><label>4. Lampiran Instrumen Penilaian (Rubrik & Soal)</label><textarea id="rpmLampRubrik" rows="4" class="form-control"></textarea></div>
+                    <div class="form-group"><label>5. Lembar Refleksi Guru</label><textarea id="rpmLampRefleksi" rows="3" class="form-control"></textarea></div>
+                    <div style="display:flex;justify-content:space-between;margin-top:1.25rem;gap:10px;"><button class="btn btn-success" id="btnSaveRPM" onclick="saveRPM()"><i class="fas fa-save"></i> SIMPAN RPM</button><button class="btn btn-primary" onclick="generateRPM()">BUAT PRATINJAU RPM <i class="fas fa-arrow-right"></i></button></div>
+                </div>
+                <div id="rpmPreviewArea" class="hidden">
+                    <div style="text-align:right;margin-bottom:12px;display:flex;gap:10px;justify-content:flex-end;" class="no-print"><button class="btn btn-success" onclick="saveRPM()"><i class="fas fa-save"></i> SIMPAN RPM</button><button class="btn btn-primary" onclick="printRPM()"><i class="fas fa-print"></i> CETAK RPM</button></div>
+                    <div id="printArea" class="rpm-container"></div>
+                </div>
             </div>
-            <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);flex-shrink:0;"><button class="btn btn-ghost" onclick="closeRPMModal()"><i class="fas fa-times"></i> TUTUP</button></div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeRPMModal()"><i class="fas fa-times"></i> TUTUP</button>
+            </div>
         </div>
     </div>
 
@@ -256,14 +310,19 @@
         import { getDatabase, ref, set, get, update, remove, onValue, push, child } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
         const firebaseConfig={apiKey:"AIzaSyBohSaSjgPN8PbtJL1dC6xTgJFWYKqVp8k",authDomain:"administrasi-pembelajara-2a050.firebaseapp.com",databaseURL:"https://administrasi-pembelajara-2a050-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"administrasi-pembelajara-2a050",storageBucket:"administrasi-pembelajara-2a050.firebasestorage.app",messagingSenderId:"561474179905",appId:"1:561474179905:web:c2aabc297d3a6f5238c7c0"};
         const app=initializeApp(firebaseConfig),db=getDatabase(app);
-        let currentUser=null,currentSubmissionId=null,currentSubmissionCreator=null,activeKelas=null,activeMapel=null,activeRombel="Semua Rombel",approvedATPData=null,rejectedATPData=null,allApprovedATP=[],allSubmissionsData={},tpCheckStates={},rawSubmissions={},rawUsers={},savedRPMs={};
+        let currentUser=null,currentSubmissionId=null,currentSubmissionCreator=null,activeKelas=null,activeMapel=null,activeRombel="Semua Rombel",approvedATPData=null,rejectedATPData=null,allApprovedATP=[],allSubmissionsData={},rawUsers={},savedRPMs={};
         const mapelKelas=["Pendidikan Pancasila","Bahasa Indonesia","Matematika","IPAS","Seni Budaya","Bahasa Sunda","Bahasa Inggris"],mapelPJOK=["Pendidikan Jasmani"],mapelPAI=["Pendidikan Agama Islam"];
 
+        /* ===== UTILITAS ===== */
         function getInitials(n){if(!n)return'?';const p=n.trim().split(/\s+/);return p.length>=2?(p[0][0]+p[p.length-1][0]).toUpperCase():p[0].substring(0,2).toUpperCase();}
         function showToast(msg,type='success'){const t=document.createElement('div');t.className=`toast toast-${type}`;const ic={success:'fa-check-circle',error:'fa-exclamation-circle',warn:'fa-exclamation-triangle'};t.innerHTML=`<i class="fas ${ic[type]||ic.success}"></i> ${msg}`;document.body.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateY(-10px)';t.style.transition='all 0.3s';setTimeout(()=>t.remove(),300);},2500);}
         function btnLoading(id,l){const b=document.getElementById(id);if(!b)return;if(l){b.dataset.oh=b.innerHTML;b.innerHTML='<span class="loading-spinner"></span> Memproses...';b.disabled=true;}else{b.innerHTML=b.dataset.oh||b.innerHTML;b.disabled=false;}}
         function getMapelByJenis(j){if(j==='pjok')return mapelPJOK;if(j==='pai')return mapelPAI;return mapelKelas;}
+        function statusBadge(s){const m={pending:'bg-pending',approved:'bg-approved',rejected:'bg-rejected'};const t={pending:'Pending',approved:'Disetujui',rejected:'Ditolak'};return `<span class="badge ${m[s]||'bg-pending'}">${t[s]||s}</span>`;}
+        function jenisLabel(j){return j==='pjok'?'Guru PJOK':j==='pai'?'Guru PAI':'Guru Kelas';}
+        function escHtml(s){if(!s)return'';const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
 
+        /* ===== KOP SURAT ===== */
         window.updateKopPreview=function(){
             const nama=document.getElementById('kopNama').value||'Nama Sekolah';
             const npsn=document.getElementById('kopNpsn').value;
@@ -272,33 +331,39 @@
             const telp=document.getElementById('kopTelp').value;
             const email=document.getElementById('kopEmail').value;
             const web=document.getElementById('kopWeb').value;
-            let h=`<div class="kp-nama">${nama}</div>`;
-            if(npsn)h+=`<div class="kp-npsn">NPSN: ${npsn}</div>`;
-            if(kec)h+=`<div class="kp-alamat">${kec}</div>`;
-            if(alamat)h+=`<div class="kp-alamat">${alamat}</div>`;
-            const k=[];if(telp)k.push(`Telp: ${telp}`);if(email)k.push(`Email: ${email}`);if(web)k.push(`Web: ${web}`);
+            let h=`<div class="kp-nama">${escHtml(nama)}</div>`;
+            if(npsn)h+=`<div class="kp-npsn">NPSN: ${escHtml(npsn)}</div>`;
+            if(kec)h+=`<div class="kp-alamat">${escHtml(kec)}</div>`;
+            if(alamat)h+=`<div class="kp-alamat">${escHtml(alamat)}</div>`;
+            const k=[];if(telp)k.push(`Telp: ${escHtml(telp)}`);if(email)k.push(`Email: ${escHtml(email)}`);if(web)k.push(`Web: ${escHtml(web)}`);
             if(k.length)h+=`<div class="kp-kontak">${k.join(' | ')}</div>`;
             document.getElementById('kopPreviewInner').innerHTML=h;
         };
 
+        /* ===== NAVIGASI LAYAR ===== */
         window.showRegister=()=>{document.getElementById('loginScreen').classList.add('hidden');document.getElementById('registerScreen').classList.remove('hidden');};
         window.showLogin=()=>{document.getElementById('registerScreen').classList.add('hidden');document.getElementById('loginScreen').classList.remove('hidden');};
         window.logout=()=>{localStorage.removeItem('kosp_user');location.reload();};
         window.closeModal=()=>document.getElementById('previewModal').classList.add('hidden');
         window.closeRPMModal=()=>document.getElementById('rpmModal').classList.add('hidden');
+        window.closeEditGuruModal=()=>document.getElementById('editGuruModal').classList.add('hidden');
+        window.closeConfirmModal=()=>document.getElementById('confirmModal').classList.add('hidden');
         window.toggleJenisGuru=()=>{document.getElementById('jenisGuruBox').style.display=document.getElementById('regRole').value==='guru'?'block':'none';};
 
+        /* ===== REGISTER ===== */
         window.handleRegister=async function(){
             btnLoading('btnRegister',true);try{
                 const role=document.getElementById('regRole').value,npsn=document.getElementById('regNpsn').value,sekolah=document.getElementById('regSekolah').value,fullname=document.getElementById('regFullname').value,username=document.getElementById('regUser').value,password=document.getElementById('regPass').value;
                 const jenisGuru=role==='guru'?document.getElementById('regJenisGuru').value:'';
                 if(!npsn||!sekolah||!fullname||!username||!password){showToast('Semua field wajib diisi!','error');return;}
+                if(password.length<6){showToast('Password minimal 6 karakter!','error');return;}
                 if((await get(ref(db,`users/${username}`))).exists()){showToast('Username sudah terdaftar!','error');return;}
-                await set(ref(db,`users/${username}`),{fullname,username,password,role,jenisGuru,npsn,sekolah});
+                await set(ref(db,`users/${username}`),{fullname,username,password,role,jenisGuru,npsn,sekolah,createdAt:Date.now()});
                 showToast('Pendaftaran berhasil!');showLogin();
             }catch(err){showToast('Gagal: '+err.message,'error');}finally{btnLoading('btnRegister',false);}
         };
 
+        /* ===== LOGIN ===== */
         window.handleLogin=async function(){
             btnLoading('btnLogin',true);try{
                 const u=document.getElementById('loginUser').value,p=document.getElementById('loginPass').value;
@@ -315,22 +380,27 @@
             }catch(err){showToast('Gagal: '+err.message,'error');}finally{btnLoading('btnLogin',false);}
         };
 
+        /* ===== INIT DASHBOARD ===== */
         function initDashboard(){
             document.getElementById('loginScreen').classList.add('hidden');document.getElementById('registerScreen').classList.add('hidden');
             document.getElementById('userNameDisplay').textContent=currentUser.fullname;
             document.getElementById('userAvatar').textContent=getInitials(currentUser.fullname);
             document.getElementById('userPill').style.display='flex';document.getElementById('logoutBtn').style.display='inline-flex';
-            document.getElementById('headerSchoolInfo').innerHTML=`<strong>${currentUser.sekolah}</strong> &middot; ${currentUser.npsn}`;
+            document.getElementById('headerSchoolInfo').innerHTML=`<strong>${escHtml(currentUser.sekolah)}</strong> &middot; ${escHtml(currentUser.npsn)}`;
             if(currentUser.role==='guru'){
                 document.getElementById('guruDashboard').classList.remove('hidden');
                 document.getElementById('gDispName').textContent=currentUser.fullname;
-                document.getElementById('gDispJenis').textContent=currentUser.jenisGuru==='pjok'?'Guru PJOK':(currentUser.jenisGuru==='pai'?'Guru PAI':'Guru Kelas');
+                document.getElementById('gDispJenis').textContent=jenisLabel(currentUser.jenisGuru);
                 document.getElementById('gDispRombel').textContent=activeRombel;
                 populateDropdowns();loadGuruWorkflow();loadSavedRPMs();
-            }else if(currentUser.role==='kepsek'){document.getElementById('kepsekDashboard').classList.remove('hidden');loadKepsekWorkflow();loadKepsekUsers();}
-            else if(currentUser.role==='pengawas'){document.getElementById('pengawasDashboard').classList.remove('hidden');loadPengawasData();}
+            }else if(currentUser.role==='kepsek'){
+                document.getElementById('kepsekDashboard').classList.remove('hidden');loadKepsekWorkflow();loadKepsekUsers();
+            }else if(currentUser.role==='pengawas'){
+                document.getElementById('pengawasDashboard').classList.remove('hidden');loadPengawasData();
+            }
         }
 
+        /* ===== DROPDOWN GURU ===== */
         function populateDropdowns(){
             const ml=getMapelByJenis(currentUser.jenisGuru);
             let kh='<option value="">-- Pilih --</option>';for(let i=1;i<=6;i++)kh+=`<option value="${i}">Kelas ${i}</option>`;document.getElementById('setupKelas').innerHTML=kh;
@@ -339,491 +409,501 @@
             let fmh='<option value="">Semua Mapel</option>';ml.forEach(m=>fmh+=`<option value="${m}">${m}</option>`);document.getElementById('filterMapel').innerHTML=fmh;document.getElementById('filterMapelAppr').innerHTML=fmh;
         }
 
-        function loadGuruWorkflow(){
-            onValue(ref(db,'submissions'),(snapshot)=>{
-                rawSubmissions=snapshot.val()||{};
-                allSubmissionsData={};allApprovedATP=[];
-                Object.keys(rawSubmissions).forEach(creator=>{
-                    Object.keys(rawSubmissions[creator]).forEach(subId=>{
-                        const d=rawSubmissions[creator][subId];
-                        allSubmissionsData[subId]={...d,id:subId,creator};
-                        if(d.status==='approved'&&creator===currentUser.username){
-                            allApprovedATP.push({...d,id:subId,creator});
-                        }
-                    });
-                });
-                renderApprovedTable();
-                filterRiwayat();
-                renderGuruStatus();
-            });
+        /* ===== GURU WORKFLOW ===== */
+        async function loadGuruWorkflow(){
+            try{
+                const snap=await get(ref(db,`submissions/${currentUser.npsn}/${currentUser.username}`));
+                const data=snap.exists()?snap.val():{};
+                allSubmissionsData=data;
+                allApprovedATP=[];
+                let hasPending=false,hasRejected=false;
+                for(const key in data){
+                    const d=data[key];
+                    if(d.status==='pending'){hasPending=true;showPendingState(d);}
+                    else if(d.status==='rejected'){hasRejected=true;showRejectedState(d,key);}
+                    else if(d.status==='approved'){allApprovedATP.push({id:key,...d});}
+                }
+                if(!hasPending&&!hasRejected){showSetupState();}
+                renderApprovedTable();filterRiwayat();
+                document.getElementById('notificationBox').style.display='none';
+            }catch(err){console.error(err);}
         }
 
-        function renderGuruStatus(){
-            const mySubs=Object.values(allSubmissionsData).filter(s=>s.creator===currentUser.username);
-            const pending=mySubs.find(s=>s.status==='pending');
-            const rejected=mySubs.find(s=>s.status==='rejected');
-            
-            document.getElementById('notificationBox').style.display='none';
+        function showSetupState(){
+            document.getElementById('setupPlanner').classList.remove('hidden');
+            document.getElementById('plannerArea').classList.add('hidden');
             document.getElementById('rejectedPlanner').classList.add('hidden');
+            document.getElementById('guruStatusBadge').className='badge bg-pending';document.getElementById('guruStatusBadge').textContent='Belum Mengajukan';
+        }
+        function showPendingState(d){
             document.getElementById('setupPlanner').classList.add('hidden');
             document.getElementById('plannerArea').classList.add('hidden');
-
-            if(pending){
-                document.getElementById('guruStatusBadge').className='badge bg-pending';
-                document.getElementById('guruStatusBadge').textContent='Menunggu Approval';
-                document.getElementById('notificationBox').style.display='block';
-                document.getElementById('notificationText').textContent=`ATP ${pending.mapel} Kelas ${pending.kelas} sedang menunggu persetujuan Kepala Sekolah.`;
-            }else if(rejected){
-                document.getElementById('guruStatusBadge').className='badge bg-rejected';
-                document.getElementById('guruStatusBadge').textContent='Ditolak';
-                document.getElementById('rejectedPlanner').classList.remove('hidden');
-                document.getElementById('rejMapel').textContent=rejected.mapel;
-                document.getElementById('rejKelas').textContent=rejected.kelas;
-                rejectedATPData=rejected;
-            }else{
-                document.getElementById('guruStatusBadge').className='badge bg-pending';
-                document.getElementById('guruStatusBadge').textContent='Belum Mengajukan';
-                document.getElementById('setupPlanner').classList.remove('hidden');
-            }
+            document.getElementById('rejectedPlanner').classList.add('hidden');
+            document.getElementById('guruStatusBadge').className='badge bg-pending';document.getElementById('guruStatusBadge').textContent='Menunggu Persetujuan';
+            const nb=document.getElementById('notificationBox');nb.style.display='block';
+            document.getElementById('notificationText').textContent=`ATP untuk ${d.mapel} Kelas ${d.kelas} sedang menunggu persetujuan Kepala Sekolah.`;
         }
-
-        window.startNewATP=()=>{rejectedATPData=null;document.getElementById('rejectedPlanner').classList.add('hidden');document.getElementById('setupPlanner').classList.remove('hidden');};
-        window.editRejectedATP=()=>{activatePlanner(rejectedATPData);};
-
-        window.activatePlanner=function(data=null){
-            activeKelas=document.getElementById('setupKelas').value;
-            activeMapel=document.getElementById('setupMapel').value;
-            if(!activeKelas||!activeMapel){showToast('Pilih kelas dan mapel dulu!','warn');return;}
-            
+        function showRejectedState(d,key){
+            document.getElementById('setupPlanner').classList.add('hidden');
+            document.getElementById('plannerArea').classList.add('hidden');
+            document.getElementById('rejectedPlanner').classList.remove('hidden');
+            document.getElementById('guruStatusBadge').className='badge bg-rejected';document.getElementById('guruStatusBadge').textContent='Ditolak';
+            document.getElementById('rejMapel').textContent=d.mapel;document.getElementById('rejKelas').textContent=d.kelas;
+            rejectedATPData={id:key,...d};
+        }
+        function showPlannerState(){
             document.getElementById('setupPlanner').classList.add('hidden');
             document.getElementById('plannerArea').classList.remove('hidden');
-            
-            document.getElementById('inputCP').value=data?data.cp:'';
-            document.getElementById('inputTopik').value=data?data.topik:'';
-            document.getElementById('inputBukuSumber').value=data?data.bukuSumber:'';
-            
-            const tpCon=document.getElementById('tpListContainer');tpCon.innerHTML='';
-            if(data&&data.tpList&&data.tpList.length>0){
-                data.tpList.forEach(tp=>addTPInput(tp.text,tp.semester));
-            }else{addTPInput();}
+            document.getElementById('rejectedPlanner').classList.add('hidden');
+        }
+
+        window.activatePlanner=function(){
+            activeKelas=document.getElementById('setupKelas').value;
+            activeMapel=document.getElementById('setupMapel').value;
+            if(!activeKelas||!activeMapel){showToast('Pilih kelas dan mata pelajaran!','warn');return;}
+            document.getElementById('inputCP').value='';document.getElementById('inputTopik').value='';document.getElementById('inputBukuSumber').value='';
+            document.getElementById('tpListContainer').innerHTML='';addTPInput();
+            showPlannerState();
         };
 
-        window.resetPlanner=()=>{document.getElementById('plannerArea').classList.add('hidden');document.getElementById('setupPlanner').classList.remove('hidden');};
+        window.resetPlanner=function(){activeKelas=null;activeMapel=null;showSetupState();};
 
-        window.addTPInput=function(text='',sem=1){
+        window.startNewATP=function(){rejectedATPData=null;showSetupState();};
+
+        window.editRejectedATP=function(){
+            if(!rejectedATPData)return;
+            activeKelas=rejectedATPData.kelas;activeMapel=rejectedATPData.mapel;
+            document.getElementById('inputCP').value=rejectedATPData.cp||'';
+            document.getElementById('inputTopik').value=rejectedATPData.topik||'';
+            document.getElementById('inputBukuSumber').value=rejectedATPData.bukuSumber||'';
+            document.getElementById('tpListContainer').innerHTML='';
+            if(rejectedATPData.tps&&rejectedATPData.tps.length){
+                rejectedATPData.tps.forEach(tp=>addTPInput(tp.text,tp.semester));
+            }else{addTPInput();}
+            showPlannerState();
+        };
+
+        window.addTPInput=function(text='',sem='1'){
             const c=document.getElementById('tpListContainer');
-            const d=document.createElement('div');d.className='tp-row';
-            d.innerHTML=`<input type="text" class="form-control tp-input" placeholder="Tujuan Pembelajaran..." value="${text}"><select class="form-control sem-select"><option value="1"${sem==1?' selected':''}>Sem 1</option><option value="2"${sem==2?' selected':''}>Sem 2</option></select><button class="tp-remove" onclick="this.parentNode.remove()"><i class="fas fa-times"></i></button>`;
-            c.appendChild(d);
+            const row=document.createElement('div');row.className='tp-row';
+            row.innerHTML=`<input type="text" class="form-control tp-input" placeholder="Tujuan Pembelajaran..." value="${escHtml(text)}"><select class="form-control sem-select"><option value="1"${sem==='1'?' selected':''}>Sem 1</option><option value="2"${sem==='2'?' selected':''}>Sem 2</option></select><button class="tp-remove" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>`;
+            c.appendChild(row);
         };
 
         window.submitToKepsek=async function(){
-            const cp=document.getElementById('inputCP').value.trim();
-            const topik=document.getElementById('inputTopik').value.trim();
-            const buku=document.getElementById('inputBukuSumber').value.trim();
-            const tpInputs=document.querySelectorAll('#tpListContainer .tp-row');
-            const tpList=[];
-            tpInputs.forEach(row=>{
-                const t=row.querySelector('.tp-input').value.trim();
-                const s=row.querySelector('.sem-select').value;
-                if(t)tpList.push({text:t,semester:s});
-            });
-
-            if(!cp||!topik||tpList.length===0){showToast('CP, Topik, dan TP wajib diisi!','error');return;}
-            btnLoading('btnSubmit',true);
-            try{
-                const subData={cp,topik,bukuSumber:buku,tpList,kelas:activeKelas,mapel:activeMapel,rombel:activeRombel,status:'pending',creator:currentUser.username,creatorName:currentUser.fullname,jenisGuru:currentUser.jenisGuru,schoolNpsn:currentUser.npsn,createdAt:Date.now()};
-                
+            btnLoading('btnSubmit',true);try{
+                const cp=document.getElementById('inputCP').value.trim();
+                const topik=document.getElementById('inputTopik').value.trim();
+                const bukuSumber=document.getElementById('inputBukuSumber').value.trim();
+                const tpRows=document.querySelectorAll('#tpListContainer .tp-row');
+                const tps=[];
+                tpRows.forEach(r=>{const t=r.querySelector('.tp-input').value.trim();const s=r.querySelector('.sem-select').value;if(t)tps.push({text:t,semester:s});});
+                if(!cp||!topik||tps.length===0){showToast('CP, Topik, dan minimal 1 TP wajib diisi!','error');return;}
+                const subData={cp,topik,tps,bukuSumber,mapel:activeMapel,kelas:activeKelas,status:'pending',creator:currentUser.username,creatorName:currentUser.fullname,jenisGuru:currentUser.jenisGuru,sekolah:currentUser.sekolah,npsn:currentUser.npsn,timestamp:Date.now()};
                 if(rejectedATPData){
-                    await update(ref(db,`submissions/${currentUser.username}/${rejectedATPData.id}`),subData);
+                    await update(ref(db,`submissions/${currentUser.npsn}/${currentUser.username}/${rejectedATPData.id}`),subData);
+                    rejectedATPData=null;
                 }else{
-                    const newRef=push(ref(db,`submissions/${currentUser.username}`));
-                    await set(newRef,subData);
+                    await push(ref(db,`submissions/${currentUser.npsn}/${currentUser.username}`),subData);
                 }
-                showToast('ATP berhasil diajukan ke Kepala Sekolah!');
-                resetPlanner();
-            }catch(err){showToast('Gagal mengajukan: '+err.message,'error');}
-            finally{btnLoading('btnSubmit',false);}
+                showToast('ATP berhasil diajukan!');loadGuruWorkflow();
+            }catch(err){showToast('Gagal: '+err.message,'error');}finally{btnLoading('btnSubmit',false);}
         };
 
         function renderApprovedTable(){
-            const k=document.getElementById('filterKelasAppr').value,m=document.getElementById('filterMapelAppr').value;
-            const tb=document.getElementById('approvedTableBody');tb.innerHTML='';
-            const filtered=allApprovedATP.filter(s=>(!k||s.kelas==k)&&(!m||s.mapel==m));
-            if(filtered.length===0){tb.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--fg-dim);">Belum ada ATP disetujui</td></tr>';return;}
-            filtered.forEach(s=>{
-                tb.innerHTML+=`<tr><td>${s.mapel}</td><td>Kelas ${s.kelas}</td><td>${s.topik||'-'}</td><td>${s.bukuSumber||'-'}</td><td><button class="btn btn-success btn-sm" onclick="openRPMModal('${s.id}')"><i class="fas fa-file-powerpoint"></i> Buat RPM</button></td></tr>`;
-            });
+            const fk=document.getElementById('filterKelasAppr').value;
+            const fm=document.getElementById('filterMapelAppr').value;
+            const filtered=allApprovedATP.filter(a=>(!fk||a.kelas===fk)&&(!fm||a.mapel===fm));
+            const tb=document.getElementById('approvedTableBody');
+            if(!filtered.length){tb.innerHTML='<tr><td colspan="5"><div class="empty-state"><i class="fas fa-inbox"></i><p>Belum ada ATP disetujui</p></div></td></tr>';return;}
+            tb.innerHTML=filtered.map(a=>`<tr><td>${escHtml(a.mapel)}</td><td>Kelas ${a.kelas}</td><td>${escHtml((a.topik||'').substring(0,60))}</td><td>${escHtml((a.bukuSumber||'').substring(0,40))}</td><td><button class="btn btn-primary btn-sm" onclick="openRPMModal('${a.id}')"><i class="fas fa-file-alt"></i> Buat RPM</button></td></tr>`).join('');
         }
 
-        function filterRiwayat(){
-            const k=document.getElementById('filterKelas').value,m=document.getElementById('filterMapel').value;
-            const tb=document.getElementById('riwayatTableBody');tb.innerHTML='';
-            const filtered=Object.values(allSubmissionsData).filter(s=>s.creator===currentUser.username&&(!k||s.kelas==k)&&(!m||s.mapel==m));
-            if(filtered.length===0){tb.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--fg-dim);">Tidak ada riwayat</td></tr>';return;}
-            filtered.forEach(s=>{
-                let bg='bg-pending',txt='Pending';
-                if(s.status==='approved'){bg='bg-approved';txt='Disetujui';}
-                else if(s.status==='rejected'){bg='bg-rejected';txt='Ditolak';}
-                tb.innerHTML+=`<tr><td>${s.mapel}</td><td>Kelas ${s.kelas}</td><td><span class="badge ${bg}">${txt}</span></td><td><button class="btn btn-ghost btn-sm" onclick="viewATPDetail('${s.creator}','${s.id}')"><i class="fas fa-eye"></i> Lihat</button></td></tr>`;
-            });
-        }
+        window.filterRiwayat=function(){
+            const fk=document.getElementById('filterKelas').value;
+            const fm=document.getElementById('filterMapel').value;
+            const tb=document.getElementById('riwayatTableBody');
+            let rows='';
+            for(const key in allSubmissionsData){
+                const d=allSubmissionsData[key];
+                if(fk&&d.kelas!==fk)continue;if(fm&&d.mapel!==fm)continue;
+                rows+=`<tr><td>${escHtml(d.mapel)}</td><td>Kelas ${d.kelas}</td><td>${statusBadge(d.status)}</td><td>${d.status==='pending'?'<span style="color:var(--fg-dim);font-size:0.82rem;">Menunggu...</span>':d.status==='approved'?`<button class="btn btn-primary btn-sm" onclick="openRPMModal('${key}')"><i class="fas fa-file-alt"></i> Buat RPM</button>`:`<button class="btn btn-warning btn-sm" onclick="viewRejectedDetail('${key}')"><i class="fas fa-eye"></i> Lihat</button>`}</td></tr>`;
+            }
+            if(!rows)rows='<tr><td colspan="4"><div class="empty-state"><i class="fas fa-inbox"></i><p>Belum ada riwayat</p></div></td></tr>';
+            tb.innerHTML=rows;
+        };
 
-        window.viewATPDetail=function(creator,id){
-            const data=allSubmissionsData[id];
-            const mC=document.getElementById('modalContent');
-            let tpHtml=data.tpList&&data.tpList.length>0?data.tpList.map(t=>`<li>${t.text} <small>(Sem ${t.semester})</small></li>`).join(''):'-';
-            mC.innerHTML=`<div class="card"><h3 style="margin-bottom:1rem;">${data.mapel} - Kelas ${data.kelas}</h3><p><strong>Pengaju:</strong> ${data.creatorName||creator}</p><p style="margin-top:0.5rem;"><strong>Topik/Materi:</strong> ${data.topik||'-'}</p><p style="margin-top:0.5rem;"><strong>CP:</strong> ${data.cp||'-'}</p><div style="margin-top:0.5rem;"><strong>Tujuan Pembelajaran:</strong><ul style="margin-left:2rem;margin-top:0.5rem;">${tpHtml}</ul></div><p style="margin-top:0.5rem;"><strong>Buku Sumber:</strong> ${data.bukuSumber||'-'}</p></div>`;
-            document.getElementById('btnApprove').style.display='none';
-            document.getElementById('btnReject').style.display='none';
+        window.viewRejectedDetail=function(key){
+            const d=allSubmissionsData[key];if(!d)return;
+            const html=`<div class="approval-card"><div class="approval-card-header"><div class="approval-card-title">${escHtml(d.mapel)} - Kelas ${d.kelas}</div>${statusBadge(d.status)}</div><div class="approval-card-section"><h4>Capaian Pembelajaran</h4><p>${escHtml(d.cp)}</p></div><div class="approval-card-section"><h4>Topik / Materi</h4><p>${escHtml(d.topik)}</p></div></div>`;
+            document.getElementById('previewModalBody').innerHTML=html;
+            document.getElementById('btnApprove').classList.add('hidden');document.getElementById('btnReject').classList.add('hidden');
             document.getElementById('previewModal').classList.remove('hidden');
         };
 
-        window.openRPMModal=function(subId){
-            const data=allApprovedATP.find(s=>s.id===subId);
-            if(!data)return;
-            approvedATPData=data;
-            document.getElementById('rpmMateri').value=data.topik||'';
-            document.getElementById('rpmAlokasi').value='2 x 45 Menit';
-            document.getElementById('rpmLampMateri').value=data.bukuSumber||'';
-            document.getElementById('rpmLampLKPD').value='';
-            document.getElementById('rpmLampMedia').value='';
-            document.getElementById('rpmLampRubrik').value='';
-            document.getElementById('rpmLampRefleksi').value='';
-            
-            // Default Kop
-            document.getElementById('kopNama').value=currentUser.sekolah.toUpperCase();
-            document.getElementById('kopNpsn').value=currentUser.npsn;
-            updateKopPreview();
-
-            // TP Checklist
-            const c=document.getElementById('tpCheckListContainer');c.innerHTML='';
-            tpCheckStates={};
-            if(data.tpList && data.tpList.length > 0){
-                data.tpList.forEach((tp,i)=>{
+        /* ===== RPM ===== */
+        window.openRPMModal=function(id){
+            const d=allSubmissionsData[id];if(!d)return;
+            approvedATPData={id,...d};tpCheckStates={};
+            document.getElementById('rpmMateri').value=d.topik||'';
+            document.getElementById('kopNama').value=currentUser.sekolah||'';
+            document.getElementById('kopNpsn').value=currentUser.npsn||'';
+            document.getElementById('kopKecamatan').value='';document.getElementById('kopAlamat').value='';
+            document.getElementById('kopTelp').value='';document.getElementById('kopEmail').value='';document.getElementById('kopWeb').value='';
+            ['rpmPendahuluan','rpmInti','rpmPenutup','rpmAsesmen','rpmLampMateri','rpmLampMedia','rpmLampLKPD','rpmLampRubrik','rpmLampRefleksi'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=el.defaultValue||'';});
+            const cl=document.getElementById('tpCheckListContainer');cl.innerHTML='';
+            if(d.tps&&d.tps.length){
+                d.tps.forEach((tp,i)=>{
                     tpCheckStates[i]=false;
-                    c.innerHTML+=`<label class="tp-check-item" onclick="toggleTP(${i})"><input type="checkbox" id="tpCheck${i}"><div class="tp-check-box"><i class="fas fa-check"></i></div><div class="tp-check-text">${tp.text}</div><div class="tp-check-semester">Sem ${tp.semester}</div></label>`;
+                    const item=document.createElement('div');item.className='tp-check-item';item.dataset.idx=i;
+                    item.innerHTML=`<input type="checkbox" id="tpchk_${i}"><div class="tp-check-box"><i class="fas fa-check"></i></div><div class="tp-check-text">${escHtml(tp.text)}</div><div class="tp-check-semester">Sem ${tp.semester}</div>`;
+                    item.onclick=()=>{tpCheckStates[i]=!tpCheckStates[i];item.classList.toggle('checked',tpCheckStates[i]);item.querySelector('input').checked=tpCheckStates[i];updateTPCount();};
+                    cl.appendChild(item);
                 });
-            } else {
-                c.innerHTML='<p style="color:var(--fg-dim);font-size:0.85rem;">Tidak ada TP di ATP ini.</p>';
             }
-            updateTPCount();
-            switchRPMTab('form');
+            updateTPCount();updateKopPreview();switchRPMTab('form');
             document.getElementById('rpmModal').classList.remove('hidden');
         };
 
-        window.toggleTP=function(i){
-            tpCheckStates[i]=!tpCheckStates[i];
-            const item=document.querySelector(`#tpCheckListContainer .tp-check-item:nth-child(${i+1})`);
-            if(item) item.classList.toggle('checked',tpCheckStates[i]);
-            updateTPCount();
-        };
-        window.toggleAllTP=function(state){
-            const items=document.querySelectorAll('#tpCheckListContainer .tp-check-item');
-            items.forEach((it,i)=>{tpCheckStates[i]=state;it.classList.toggle('checked',state);});
-            updateTPCount();
-        };
         function updateTPCount(){
-            const c=Object.values(tpCheckStates).filter(v=>v).length;
-            document.getElementById('tpSelectedCount').textContent=`${c} TP dipilih`;
+            const c=Object.values(tpCheckStates).filter(Boolean).length;
+            document.getElementById('tpSelectedCount').textContent=c?'Terpilih: '+c:'';
         }
+        window.toggleAllTP=function(val){
+            Object.keys(tpCheckStates).forEach(i=>{tpCheckStates[i]=val;});
+            document.querySelectorAll('#tpCheckListContainer .tp-check-item').forEach(el=>{const i=el.dataset.idx;el.classList.toggle('checked',val);el.querySelector('input').checked=val;});
+            updateTPCount();
+        };
 
         window.switchRPMTab=function(tab){
-            if(tab==='form'){
-                document.getElementById('rpmFormArea').classList.remove('hidden');
-                document.getElementById('rpmPreviewArea').classList.add('hidden');
-                document.getElementById('tabForm').className='btn btn-primary';
-                document.getElementById('tabPreview').className='btn btn-ghost';
-            }else{
-                generateRPM();
-                document.getElementById('rpmFormArea').classList.add('hidden');
-                document.getElementById('rpmPreviewArea').classList.remove('hidden');
-                document.getElementById('tabForm').className='btn btn-ghost';
-                document.getElementById('tabPreview').className='btn btn-primary';
-            }
+            document.getElementById('rpmFormArea').classList.toggle('hidden',tab!=='form');
+            document.getElementById('rpmPreviewArea').classList.toggle('hidden',tab!=='preview');
+            document.getElementById('tabForm').className=tab==='form'?'btn btn-primary':'btn btn-ghost';
+            document.getElementById('tabPreview').className=tab==='preview'?'btn btn-primary':'btn btn-ghost';
+            if(tab==='preview')generateRPM();
         };
 
         window.generateRPM=function(){
-            const nama=document.getElementById('kopNama').value||'NAMA SEKOLAH';
-            const npsn=document.getElementById('kopNpsn').value;
-            const kec=document.getElementById('kopKecamatan').value;
-            const alamat=document.getElementById('kopAlamat').value;
-            const telp=document.getElementById('kopTelp').value;
-            const email=document.getElementById('kopEmail').value;
-            const web=document.getElementById('kopWeb').value;
-            const materi=document.getElementById('rpmMateri').value||'-';
-            const alokasi=document.getElementById('rpmAlokasi').value||'-';
-            const pendahuluan=document.getElementById('rpmPendahuluan').value||'-';
-            const inti=document.getElementById('rpmInti').value||'-';
-            const penutup=document.getElementById('rpmPenutup').value||'-';
-            const asesmen=document.getElementById('rpmAsesmen').value||'-';
-            const lampMateri=document.getElementById('rpmLampMateri').value||'-';
-            const lampMedia=document.getElementById('rpmLampMedia').value||'-';
-            const lampLKPD=document.getElementById('rpmLampLKPD').value||'-';
-            const lampRubrik=document.getElementById('rpmLampRubrik').value||'-';
-            const lampRefleksi=document.getElementById('rpmLampRefleksi').value||'-';
+            if(!approvedATPData)return;
+            const kopNama=document.getElementById('kopNama').value;
+            const kopNpsn=document.getElementById('kopNpsn').value;
+            const kopKec=document.getElementById('kopKecamatan').value;
+            const kopAlm=document.getElementById('kopAlamat').value;
+            const kopTlp=document.getElementById('kopTelp').value;
+            const kopEml=document.getElementById('kopEmail').value;
+            const kopWeb=document.getElementById('kopWeb').value;
+            const materi=document.getElementById('rpmMateri').value;
+            const alokasi=document.getElementById('rpmAlokasi').value;
+            const selectedTPs=[];Object.keys(tpCheckStates).forEach(i=>{if(tpCheckStates[i])selectedTPs.push(approvedATPData.tps[i]);});
+            const pend=document.getElementById('rpmPendahuluan').value;
+            const inti=document.getElementById('rpmInti').value;
+            const pen=document.getElementById('rpmPenutup').value;
+            const ase=document.getElementById('rpmAsesmen').value;
+            const lm=document.getElementById('rpmLampMateri').value;
+            const lmd=document.getElementById('rpmLampMedia').value;
+            const ll=document.getElementById('rpmLampLKPD').value;
+            const lr=document.getElementById('rpmLampRubrik').value;
+            const lrf=document.getElementById('rpmLampRefleksi').value;
 
-            let tpSelected=[];
-            if(approvedATPData && approvedATPData.tpList){
-                approvedATPData.tpList.forEach((tp,i)=>{if(tpCheckStates[i])tpSelected.push(tp.text);});
-            }
-            const tpHtml=tpSelected.length>0?`<ol>${tpSelected.map(t=>`<li>${t}</li>`).join('')}</ol>`:'-';
-
-            let kopHtml=`<div class="kop-surat"><div class="kop-nama">${nama}</div>`;
-            if(npsn)kopHtml+=`<div class="kop-npsn">NPSN: ${npsn}</div>`;
-            if(kec)kopHtml+=`<div class="kop-alamat">${kec}</div>`;
-            if(alamat)kopHtml+=`<div class="kop-alamat">${alamat}</div>`;
-            const k=[];if(telp)k.push(`Telp: ${telp}`);if(email)k.push(`Email: ${email}`);if(web)k.push(`Web: ${web}`);
-            if(k.length)kopHtml+=`<div class="kop-kontak">${k.join(' | ')}</div>`;
+            let kopHtml=`<div class="kop-surat"><div class="kop-nama">${escHtml(kopNama)}</div>`;
+            if(kopNpsn)kopHtml+=`<div class="kop-npsn">NPSN: ${escHtml(kopNpsn)}</div>`;
+            if(kopKec)kopHtml+=`<div class="kop-alamat">${escHtml(kopKec)}</div>`;
+            if(kopAlm)kopHtml+=`<div class="kop-alamat">${escHtml(kopAlm)}</div>`;
+            const kontak=[];if(kopTlp)kontak.push(`Telp: ${escHtml(kopTlp)}`);if(kopEml)kontak.push(`Email: ${escHtml(kopEml)}`);if(kopWeb)kontak.push(`Web: ${escHtml(kopWeb)}`);
+            if(kontak.length)kopHtml+=`<div class="kop-kontak">${kontak.join(' | ')}</div>`;
             kopHtml+=`</div>`;
 
-            const html=`
-                ${kopHtml}
-                <h2>RENCANA PELAKSANAAN PEMBELAJARAN (RPP)</h2>
-                <table style="width:100%; border:1px solid black; border-collapse:collapse;">
-                    <tr><td style="width:20%; border:1px solid black; padding:8px;"><strong>Mata Pelajaran</strong></td><td style="border:1px solid black; padding:8px;">${approvedATPData.mapel}</td></tr>
-                    <tr><td style="border:1px solid black; padding:8px;"><strong>Kelas / Fase</strong></td><td style="border:1px solid black; padding:8px;">Kelas ${approvedATPData.kelas} / Fase ${Math.ceil(approvedATPData.kelas/3)}</td></tr>
-                    <tr><td style="border:1px solid black; padding:8px;"><strong>Topik / Materi Pokok</strong></td><td style="border:1px solid black; padding:8px;">${materi}</td></tr>
-                    <tr><td style="border:1px solid black; padding:8px;"><strong>Alokasi Waktu</strong></td><td style="border:1px solid black; padding:8px;">${alokasi}</td></tr>
-                </table>
+            let tpRows='';selectedTPs.forEach((tp,i)=>{tpRows+=`<tr><td>${i+1}</td><td>${escHtml(tp.text)}</td><td>Semester ${tp.semester}</td></tr>`;});
 
-                <h3>A. Tujuan Pembelajaran</h3>
-                ${tpHtml}
-
-                <h3>B. Kegiatan Pembelajaran</h3>
-                <table style="width:100%; border:1px solid black; border-collapse:collapse;">
-                    <tr><th style="border:1px solid black; padding:8px; width:20%;">Tahapan</th><th style="border:1px solid black; padding:8px;">Deskripsi Kegiatan</th></tr>
-                    <tr><td style="border:1px solid black; padding:8px;"><strong>Pendahuluan</strong></td><td style="border:1px solid black; padding:8px;">${pendahuluan}</td></tr>
-                    <tr><td style="border:1px solid black; padding:8px;"><strong>Kegiatan Inti</strong></td><td style="border:1px solid black; padding:8px;">${inti}</td></tr>
-                    <tr><td style="border:1px solid black; padding:8px;"><strong>Penutup</strong></td><td style="border:1px solid black; padding:8px;">${penutup}</td></tr>
-                </table>
-
-                <h3>C. Asesmen</h3>
-                <p>${asesmen}</p>
-
-                <h3>D. Lampiran</h3>
-                <div class="lampiran-box"><div class="lampiran-title">1. Materi Ajar & Sumber Belajar</div><div class="lampiran-content">${lampMateri}</div></div>
-                <div class="lampiran-box"><div class="lampiran-title">2. Media & Alat Pembelajaran</div><div class="lampiran-content">${lampMedia}</div></div>
-                <div class="lampiran-box"><div class="lampiran-title">3. Lembar Kerja Peserta Didik (LKPD)</div><div class="lampiran-content">${lampLKPD}</div></div>
-                <div class="lampiran-box"><div class="lampiran-title">4. Instrumen Penilaian</div><div class="lampiran-content">${lampRubrik}</div></div>
-                <div class="lampiran-box"><div class="lampiran-title">5. Refleksi Guru</div><div class="lampiran-content">${lampRefleksi}</div></div>
-
-                <div class="rpm-ttd">
-                    <div class="rpm-ttd-box">
-                        Mengetahui,<br>Kepala Sekolah
-                        <br><br><br><br>
-                        (.............................)
-                    </div>
-                    <div class="rpm-ttd-box">
-                        ${kec||'..................'}, ${new Date().toLocaleDateString('id-ID')}
-                        <br>Guru Kelas
-                        <br><br><br><br>
-                        (${currentUser.fullname})
-                    </div>
-                </div>
-            `;
-            document.getElementById('printArea').innerHTML=html;
+            let h=kopHtml;
+            h+=`<h2>RENCANA PELAKSANAAN MODUL (RPM)</h2>`;
+            h+=`<table><tr><td style="width:30%;">Satuan Pendidikan</td><td>:</td><td>${escHtml(kopNama)}</td></tr>`;
+            h+=`<tr><td>Mata Pelajaran</td><td>:</td><td>${escHtml(approvedATPData.mapel)}</td></tr>`;
+            h+=`<tr><td>Kelas / Semester</td><td>:</td><td>Kelas ${approvedATPData.kelas}</td></tr>`;
+            h+=`<tr><td>Materi Pokok</td><td>:</td><td>${escHtml(materi)}</td></tr>`;
+            h+=`<tr><td>Alokasi Waktu</td><td>:</td><td>${escHtml(alokasi)}</td></tr></table>`;
+            h+=`<h3>A. Tujuan Pembelajaran</h3><table><thead><tr><th>No</th><th>Tujuan Pembelajaran</th><th>Semester</th></tr></thead><tbody>${tpRows}</tbody></table>`;
+            h+=`<h3>B. Kegiatan Pembelajaran</h3>`;
+            h+=`<table><tr><td style="width:20%;vertical-align:top;"><strong>Pendahuluan</strong></td><td>${escHtml(pend).replace(/\n/g,'<br>')}</td></tr>`;
+            h+=`<tr><td style="vertical-align:top;"><strong>Kegiatan Inti</strong></td><td>${escHtml(inti).replace(/\n/g,'<br>')}</td></tr>`;
+            h+=`<tr><td style="vertical-align:top;"><strong>Penutup</strong></td><td>${escHtml(pen).replace(/\n/g,'<br>')}</td></tr></table>`;
+            h+=`<h3>C. Asesmen</h3><p>${escHtml(ase).replace(/\n/g,'<br>')}</p>`;
+            h+=`<h3>D. Buku Sumber</h3><p>${escHtml(approvedATPData.bukuSumber||'-').replace(/\n/g,'<br>')}</p>`;
+            h+=`<div class="page-break"></div>`;
+            h+=`<h3>Lampiran</h3>`;
+            h+=`<div class="lampiran-box"><div class="lampiran-title">1. Materi Ajar & Sumber Belajar</div><div class="lampiran-content">${escHtml(lm).replace(/\n/g,'<br>')||'-'}</div></div>`;
+            h+=`<div class="lampiran-box"><div class="lampiran-title">2. Media & Alat Pembelajaran</div><div class="lampiran-content">${escHtml(lmd).replace(/\n/g,'<br>')||'-'}</div></div>`;
+            h+=`<div class="lampiran-box"><div class="lampiran-title">3. LKPD</div><div class="lampiran-content">${escHtml(ll).replace(/\n/g,'<br>')||'-'}</div></div>`;
+            h+=`<div class="lampiran-box"><div class="lampiran-title">4. Instrumen Penilaian</div><div class="lampiran-content">${escHtml(lr).replace(/\n/g,'<br>')||'-'}</div></div>`;
+            h+=`<div class="lampiran-box"><div class="lampiran-title">5. Lembar Refleksi Guru</div><div class="lampiran-content">${escHtml(lrf).replace(/\n/g,'<br>')||'-'}</div></div>`;
+            h+=`<div class="rpm-ttd"><div class="rpm-ttd-box">Mengetahui,<br>Kepala Sekolah<br><br><br><br><b>____________________</b><br>NIP. </div><div class="rpm-ttd-box">Majalengka, ................<br>Guru Mata Pelajaran<br><br><br><br><b>${escHtml(currentUser.fullname)}</b><br>NIP. </div></div>`;
+            document.getElementById('printArea').innerHTML=h;
+            switchRPMTab('preview');
         };
 
-        window.printRPM=()=>window.print();
+        window.printRPM=function(){window.print();};
 
         window.saveRPM=async function(){
-            if(!approvedATPData){showToast('Data RPM tidak ditemukan','error');return;}
-            btnLoading('btnSaveRPM',true);
-            try{
+            if(!approvedATPData)return;
+            btnLoading('btnSaveRPM',true);try{
                 const rpmData={
-                    mapel:approvedATPData.mapel,
-                    kelas:approvedATPData.kelas,
+                    atpId:approvedATPData.id,mapel:approvedATPData.mapel,kelas:approvedATPData.kelas,
                     materi:document.getElementById('rpmMateri').value,
                     alokasi:document.getElementById('rpmAlokasi').value,
-                    pendahuluan:document.getElementById('rpmPendahuluan').value,
-                    inti:document.getElementById('rpmInti').value,
-                    penutup:document.getElementById('rpmPenutup').value,
-                    asesmen:document.getElementById('rpmAsesmen').value,
-                    lampMateri:document.getElementById('rpmLampMateri').value,
-                    lampMedia:document.getElementById('rpmLampMedia').value,
-                    lampLKPD:document.getElementById('rpmLampLKPD').value,
-                    lampRubrik:document.getElementById('rpmLampRubrik').value,
-                    lampRefleksi:document.getElementById('rpmLampRefleksi').value,
-                    kopNama:document.getElementById('kopNama').value,
-                    kopNpsn:document.getElementById('kopNpsn').value,
-                    kopKecamatan:document.getElementById('kopKecamatan').value,
-                    kopAlamat:document.getElementById('kopAlamat').value,
-                    kopTelp:document.getElementById('kopTelp').value,
-                    kopEmail:document.getElementById('kopEmail').value,
-                    kopWeb:document.getElementById('kopWeb').value,
-                    tpSelected:approvedATPData.tpList.filter((t,i)=>tpCheckStates[i]).map(t=>t.text),
-                    creator:currentUser.username,
-                    creatorName:currentUser.fullname,
-                    atpId:approvedATPData.id,
-                    savedAt:Date.now()
+                    kop:{nama:document.getElementById('kopNama').value,npsn:document.getElementById('kopNpsn').value,kecamatan:document.getElementById('kopKecamatan').value,alamat:document.getElementById('kopAlamat').value,telp:document.getElementById('kopTelp').value,email:document.getElementById('kopEmail').value,web:document.getElementById('kopWeb').value},
+                    selectedTPs:Object.keys(tpCheckStates).filter(i=>tpCheckStates[i]).map(i=>approvedATPData.tps[i]),
+                    pendahuluan:document.getElementById('rpmPendahuluan').value,inti:document.getElementById('rpmInti').value,penutup:document.getElementById('rpmPenutup').value,asesmen:document.getElementById('rpmAsesmen').value,
+                    lampiran:{materi:document.getElementById('rpmLampMateri').value,media:document.getElementById('rpmLampMedia').value,lkpd:document.getElementById('rpmLampLKPD').value,rubrik:document.getElementById('rpmLampRubrik').value,refleksi:document.getElementById('rpmLampRefleksi').value},
+                    creator:currentUser.username,creatorName:currentUser.fullname,timestamp:Date.now()
                 };
-                const newRpmRef=push(ref(db,`rpms/${currentUser.username}`));
-                await set(newRpmRef,rpmData);
-                showToast('RPM berhasil disimpan ke arsip!');
-                closeRPMModal();
-            }catch(err){showToast('Gagal simpan: '+err.message,'error');}
-            finally{btnLoading('btnSaveRPM',false);}
+                await push(ref(db,`rpms/${currentUser.npsn}/${currentUser.username}`),rpmData);
+                showToast('RPM berhasil disimpan!');loadSavedRPMs();
+            }catch(err){showToast('Gagal: '+err.message,'error');}finally{btnLoading('btnSaveRPM',false);}
         };
 
-        function loadSavedRPMs(){
-            onValue(ref(db,`rpms/${currentUser.username}`),(snapshot)=>{
-                savedRPMs=snapshot.val()||{};
-                renderSavedRPMs();
-            });
+        async function loadSavedRPMs(){
+            try{
+                const snap=await get(ref(db,`rpms/${currentUser.npsn}/${currentUser.username}`));
+                const data=snap.exists()?snap.val():{};savedRPMs=data;
+                const tb=document.getElementById('rpmSavedTableBody');
+                let rows='';
+                for(const key in data){
+                    const d=data[key];
+                    rows+=`<tr><td>${escHtml(d.mapel)}</td><td>Kelas ${d.kelas}</td><td>${escHtml((d.materi||'').substring(0,50))}</td><td><button class="btn btn-primary btn-sm" onclick="loadSavedRPMDetail('${key}')"><i class="fas fa-eye"></i> Lihat</button> <button class="btn btn-danger btn-sm" onclick="deleteSavedRPM('${key}')"><i class="fas fa-trash"></i></button></td></tr>`;
+                }
+                if(!rows)rows='<tr><td colspan="4"><div class="empty-state"><i class="fas fa-inbox"></i><p>Belum ada RPM tersimpan</p></div></td></tr>';
+                tb.innerHTML=rows;
+            }catch(err){console.error(err);}
         }
 
-        function renderSavedRPMs(){
-            const tb=document.getElementById('rpmSavedTableBody');tb.innerHTML='';
-            const arr=Object.keys(savedRPMs).map(id=>({...savedRPMs[id],id}));
-            if(arr.length===0){tb.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--fg-dim);">Belum ada RPM tersimpan</td></tr>';return;}
-            arr.forEach(r=>{
-                tb.innerHTML+=`<tr><td>${r.mapel}</td><td>Kelas ${r.kelas}</td><td>${r.materi}</td><td><button class="btn btn-primary btn-sm" onclick="editSavedRPM('${r.id}')"><i class="fas fa-edit"></i> Edit</button> <button class="btn btn-ghost btn-sm" onclick="deleteSavedRPM('${r.id}')"><i class="fas fa-trash"></i></button></td></tr>`;
-            });
-        }
-
-        window.editSavedRPM=function(id){
-            const r=savedRPMs[id];
-            // Isi form dengan data tersimpan
-            document.getElementById('rpmMateri').value=r.materi;
-            document.getElementById('rpmAlokasi').value=r.alokasi;
-            document.getElementById('rpmPendahuluan').value=r.pendahuluan;
-            document.getElementById('rpmInti').value=r.inti;
-            document.getElementById('rpmPenutup').value=r.penutup;
-            document.getElementById('rpmAsesmen').value=r.asesmen;
-            document.getElementById('rpmLampMateri').value=r.lampMateri;
-            document.getElementById('rpmLampMedia').value=r.lampMedia;
-            document.getElementById('rpmLampLKPD').value=r.lampLKPD;
-            document.getElementById('rpmLampRubrik').value=r.lampRubrik;
-            document.getElementById('rpmLampRefleksi').value=r.lampRefleksi;
-            document.getElementById('kopNama').value=r.kopNama;
-            document.getElementById('kopNpsn').value=r.kopNpsn;
-            document.getElementById('kopKecamatan').value=r.kopKecamatan;
-            document.getElementById('kopAlamat').value=r.kopAlamat;
-            document.getElementById('kopTelp').value=r.kopTelp;
-            document.getElementById('kopEmail').value=r.kopEmail;
-            document.getElementById('kopWeb').value=r.kopWeb;
-            updateKopPreview();
-            // Buka modal (simulasi)
-            document.getElementById('rpmModal').classList.remove('hidden');
-            switchRPMTab('form');
+        window.loadSavedRPMDetail=function(key){
+            const d=savedRPMs[key];if(!d)return;
+            approvedATPData={id:d.atpId,mapel:d.mapel,kelas:d.kelas,bukuSumber:'',tps:d.selectedTPs||[]};
+            tpCheckStates={};
+            if(d.kop){document.getElementById('kopNama').value=d.kop.nama||'';document.getElementById('kopNpsn').value=d.kop.npsn||'';document.getElementById('kopKecamatan').value=d.kop.kecamatan||'';document.getElementById('kopAlamat').value=d.kop.alamat||'';document.getElementById('kopTelp').value=d.kop.telp||'';document.getElementById('kopEmail').value=d.kop.email||'';document.getElementById('kopWeb').value=d.kop.web||'';}
+            document.getElementById('rpmMateri').value=d.materi||'';document.getElementById('rpmAlokasi').value=d.alokasi||'';
+            document.getElementById('rpmPendahuluan').value=d.pendahuluan||'';document.getElementById('rpmInti').value=d.inti||'';document.getElementById('rpmPenutup').value=d.penutup||'';document.getElementById('rpmAsesmen').value=d.asesmen||'';
+            if(d.lampiran){document.getElementById('rpmLampMateri').value=d.lampiran.materi||'';document.getElementById('rpmLampMedia').value=d.lampiran.media||'';document.getElementById('rpmLampLKPD').value=d.lampiran.lkpd||'';document.getElementById('rpmLampRubrik').value=d.lampiran.rubrik||'';document.getElementById('rpmLampRefleksi').value=d.lampiran.refleksi||'';}
+            const cl=document.getElementById('tpCheckListContainer');cl.innerHTML='';
+            if(d.selectedTPs){d.selectedTPs.forEach((tp,i)=>{tpCheckStates[i]=true;const item=document.createElement('div');item.className='tp-check-item checked';item.dataset.idx=i;item.innerHTML=`<input type="checkbox" checked id="tpchk_${i}"><div class="tp-check-box"><i class="fas fa-check"></i></div><div class="tp-check-text">${escHtml(tp.text)}</div><div class="tp-check-semester">Sem ${tp.semester}</div>`;item.onclick=()=>{tpCheckStates[i]=!tpCheckStates[i];item.classList.toggle('checked',tpCheckStates[i]);item.querySelector('input').checked=tpCheckStates[i];updateTPCount();};cl.appendChild(item);});}
+            updateTPCount();updateKopPreview();switchRPMTab('form');document.getElementById('rpmModal').classList.remove('hidden');
         };
 
-        window.deleteSavedRPM=async function(id){
-            if(!confirm('Hapus RPM ini?'))return;
-            try{await remove(ref(db,`rpms/${currentUser.username}/${id}`));showToast('RPM dihapus');}catch(e){showToast('Gagal hapus','error');}
+        window.deleteSavedRPM=async function(key){
+            document.getElementById('confirmTitle').textContent='Hapus RPM?';
+            document.getElementById('confirmMessage').textContent='RPM ini akan dihapus secara permanen.';
+            document.getElementById('confirmActionBtn').onclick=async function(){
+                closeConfirmModal();try{await remove(ref(db,`rpms/${currentUser.npsn}/${currentUser.username}/${key}`));showToast('RPM berhasil dihapus!');loadSavedRPMs();}catch(err){showToast('Gagal: '+err.message,'error');}
+            };
+            document.getElementById('confirmModal').classList.remove('hidden');
         };
 
-        // KEPSEK FUNCTIONS
-        function loadKepsekWorkflow(){
-            onValue(ref(db,'submissions'),(snapshot)=>{
-                rawSubmissions=snapshot.val()||{};
-                allSubmissionsData={};
-                Object.keys(rawSubmissions).forEach(creator=>{
-                    Object.keys(rawSubmissions[creator]).forEach(subId=>{
-                        allSubmissionsData[subId]={...rawSubmissions[creator][subId],id:subId,creator};
-                    });
-                });
-                loadKepsekTable();
-            });
+        /* ===== KEPSEK WORKFLOW ===== */
+        async function loadKepsekWorkflow(){
+            try{
+                const snap=await get(ref(db,`submissions/${currentUser.npsn}`));
+                const data=snap.exists()?snap.val():{};
+                const fj=document.getElementById('kepsekFilterJenis').value;
+                const fk=document.getElementById('kepsekFilterKelas').value;
+                const fm=document.getElementById('kepsekFilterMapel').value;
+                const tb=document.getElementById('kepsekTableBody');let rows='';
+                for(const uname in data){
+                    for(const sid in data[uname]){
+                        const d=data[uname][sid];
+                        if(fj&&d.jenisGuru!==fj)continue;if(fk&&d.kelas!==fk)continue;if(fm&&d.mapel!==fm)continue;
+                        rows+=`<tr><td>${escHtml(d.creatorName||uname)}</td><td>${jenisLabel(d.jenisGuru)}</td><td>${escHtml(d.mapel)}</td><td>Kelas ${d.kelas}</td><td>${statusBadge(d.status)}</td><td>${d.status==='pending'?`<button class="btn btn-primary btn-sm" onclick="openPreview('${uname}','${sid}')"><i class="fas fa-eye"></i> Review</button>`:'<span style="color:var(--fg-dim);font-size:0.82rem;">-</span>'}</td></tr>`;
+                    }
+                }
+                if(!rows)rows='<tr><td colspan="6"><div class="empty-state"><i class="fas fa-inbox"></i><p>Tidak ada pengajuan ATP</p></div></td></tr>';
+                tb.innerHTML=rows;
+            }catch(err){console.error(err);}
         }
+        window.loadKepsekTable=loadKepsekWorkflow;
 
-        function loadKepsekTable(){
-            const j=document.getElementById('kepsekFilterJenis').value,k=document.getElementById('kepsekFilterKelas').value,m=document.getElementById('kepsekFilterMapel').value;
-            const tb=document.getElementById('kepsekTableBody');tb.innerHTML='';
-            const filtered=Object.values(allSubmissionsData).filter(s=>(!j||s.jenisGuru==j)&&(!k||s.kelas==k)&&(!m||s.mapel==m));
-            if(filtered.length===0){tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--fg-dim);">Tidak ada dokumen</td></tr>';return;}
-            filtered.forEach(s=>{
-                let bg='bg-pending',txt='Pending';
-                if(s.status==='approved'){bg='bg-approved';txt='Disetujui';}
-                else if(s.status==='rejected'){bg='bg-rejected';txt='Ditolak';}
-                tb.innerHTML+=`<tr><td>${s.creatorName || s.creator}</td><td>${s.jenisGuru==='pjok'?'PJOK':(s.jenisGuru==='pai'?'PAI':'Kelas')}</td><td>${s.mapel}</td><td>Kelas ${s.kelas}</td><td><span class="badge ${bg}">${txt}</span></td><td><button class="btn btn-ghost btn-sm" onclick="reviewATP('${s.creator}','${s.id}')"><i class="fas fa-eye"></i> Review</button></td></tr>`;
+        window.openPreview=function(uname,sid){
+            currentSubmissionCreator=uname;currentSubmissionId=sid;
+            get(ref(db,`submissions/${currentUser.npsn}/${uname}/${sid}`)).then(snap=>{
+                if(!snap.exists())return;const d=snap.val();
+                let tpHtml='<ul class="approval-card-tp">';(d.tps||[]).forEach(tp=>{tpHtml+=`<li>${escHtml(tp.text)} <span class="tp-check-semester" style="margin-left:8px;">Sem ${tp.semester}</span></li>`;});tpHtml+='</ul>';
+                const html=`<div class="approval-card"><div class="approval-card-header"><div class="approval-card-title">${escHtml(d.mapel)} - Kelas ${d.kelas}</div>${statusBadge(d.status)}</div><div class="approval-card-meta"><span><i class="fas fa-user"></i> ${escHtml(d.creatorName||uname)}</span><span><i class="fas fa-tag"></i> ${jenisLabel(d.jenisGuru)}</span><span><i class="fas fa-clock"></i> ${d.timestamp?new Date(d.timestamp).toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'}):'-'}</span></div><div class="approval-card-section"><h4>Capaian Pembelajaran (CP)</h4><p>${escHtml(d.cp)}</p></div><div class="approval-card-section"><h4>Topik / Materi Pokok</h4><p>${escHtml(d.topik)}</p></div><div class="approval-card-section"><h4>Tujuan Pembelajaran (TP)</h4>${tpHtml}</div><div class="approval-card-section"><h4>Buku Sumber</h4><p>${escHtml(d.bukuSumber||'-')}</p></div></div>`;
+                document.getElementById('previewModalBody').innerHTML=html;
+                if(d.status==='pending'){document.getElementById('btnApprove').classList.remove('hidden');document.getElementById('btnReject').classList.remove('hidden');}
+                else{document.getElementById('btnApprove').classList.add('hidden');document.getElementById('btnReject').classList.add('hidden');}
+                document.getElementById('previewModal').classList.remove('hidden');
             });
-        }
-
-        window.reviewATP=function(creator,id){
-            const data=allSubmissionsData[id];
-            currentSubmissionId=id;
-            currentSubmissionCreator=creator;
-            const mC=document.getElementById('modalContent');
-            let tpHtml=data.tpList&&data.tpList.length>0?data.tpList.map(t=>`<li>${t.text} <small>(Sem ${t.semester})</small></li>`).join(''):'-';
-            mC.innerHTML=`<div class="card"><h3 style="margin-bottom:1rem;">${data.mapel} - Kelas ${data.kelas}</h3><p><strong>Pengaju:</strong> ${data.creatorName || creator}</p><p style="margin-top:0.5rem;"><strong>Topik/Materi:</strong> ${data.topik||'-'}</p><p style="margin-top:0.5rem;"><strong>CP:</strong> ${data.cp||'-'}</p><div style="margin-top:0.5rem;"><strong>Tujuan Pembelajaran:</strong><ul style="margin-left:2rem;margin-top:0.5rem;">${tpHtml}</ul></div><p style="margin-top:0.5rem;"><strong>Buku Sumber:</strong> ${data.bukuSumber||'-'}</p></div>`;
-            
-            if(data.status==='pending'){
-                document.getElementById('btnApprove').style.display='inline-flex';
-                document.getElementById('btnReject').style.display='inline-flex';
-            }else{
-                document.getElementById('btnApprove').style.display='none';
-                document.getElementById('btnReject').style.display='none';
-            }
-            document.getElementById('previewModal').classList.remove('hidden');
         };
 
         window.approveSubmission=async function(){
-            try{
-                await update(ref(db,`submissions/${currentSubmissionCreator}/${currentSubmissionId}`),{status:'approved'});
-                showToast('ATP Disetujui!');
-                closeModal();
-            }catch(e){showToast('Gagal approve','error');}
+            if(!currentSubmissionCreator||!currentSubmissionId)return;
+            try{await update(ref(db,`submissions/${currentUser.npsn}/${currentSubmissionCreator}/${currentSubmissionId}`),{status:'approved',approvedBy:currentUser.username,approvedAt:Date.now()});showToast('ATP berhasil disetujui!');closeModal();loadKepsekWorkflow();}catch(err){showToast('Gagal: '+err.message,'error');}
         };
         window.rejectSubmission=async function(){
-            try{
-                await update(ref(db,`submissions/${currentSubmissionCreator}/${currentSubmissionId}`),{status:'rejected'});
-                showToast('ATP Ditolak!','warn');
-                closeModal();
-            }catch(e){showToast('Gagal reject','error');}
+            if(!currentSubmissionCreator||!currentSubmissionId)return;
+            try{await update(ref(db,`submissions/${currentUser.npsn}/${currentSubmissionCreator}/${currentSubmissionId}`),{status:'rejected',rejectedBy:currentUser.username,rejectedAt:Date.now()});showToast('ATP ditolak.','warn');closeModal();loadKepsekWorkflow();}catch(err){showToast('Gagal: '+err.message,'error');}
         };
 
-        function loadKepsekUsers(){
-            onValue(ref(db,'users'),(snapshot)=>{
-                rawUsers=snapshot.val()||{};
-                const tb=document.getElementById('kepsekUserTableBody');tb.innerHTML='';
-                Object.keys(rawUsers).forEach(u=>{
-                    const d=rawUsers[u];
-                    if(d.role==='guru'&&d.npsn===currentUser.npsn){
-                        tb.innerHTML+=`<tr><td>${d.fullname}</td><td>${u}</td><td>${d.jenisGuru==='pjok'?'PJOK':(d.jenisGuru==='pai'?'PAI':'Kelas')}</td><td><button class="btn btn-ghost btn-sm" onclick="openEditGuruModal('${u}')"><i class="fas fa-edit"></i> Edit</button></td></tr>`;
-                    }
-                });
-            });
+        /* ===== KEPSEK MANAJEMEN GURU ===== */
+        async function loadKepsekUsers(){
+            try{
+                const snap=await get(ref(db,`users`));
+                const data=snap.exists()?snap.val():{};rawUsers=data;
+                const tb=document.getElementById('kepsekUserTableBody');let rows='';
+                for(const uname in data){
+                    const u=data[uname];
+                    if(u.role!=='guru'||u.npsn!==currentUser.npsn)continue;
+                    rows+=`<tr><td>${escHtml(u.fullname)}</td><td>${escHtml(u.username)}</td><td>${jenisLabel(u.jenisGuru)}</td><td style="display:flex;gap:6px;"><button class="btn btn-ghost btn-sm" onclick="openEditGuru('${uname}')"><i class="fas fa-edit"></i> Edit</button><button class="btn btn-danger btn-sm" onclick="confirmDeleteGuru('${uname}','${escHtml(u.fullname)}')"><i class="fas fa-trash"></i> Hapus</button></td></tr>`;
+                }
+                if(!rows)rows='<tr><td colspan="4"><div class="empty-state"><i class="fas fa-users"></i><p>Belum ada guru terdaftar</p></div></td></tr>';
+                tb.innerHTML=rows;
+            }catch(err){console.error(err);}
         }
 
-        window.openEditGuruModal=function(u){
-            const d=rawUsers[u];
-            document.getElementById('editGuruId').value=u;
-            document.getElementById('editGuruName').value=d.fullname;
-            document.getElementById('editGuruUsername').value=u;
-            document.getElementById('editGuruJenis').value=d.jenisGuru;
+        window.openEditGuru=function(uname){
+            const u=rawUsers[uname];if(!u)return;
+            document.getElementById('editGuruId').value=uname;
+            document.getElementById('editGuruName').value=u.fullname||'';
+            document.getElementById('editGuruUsername').value=u.username||'';
+            document.getElementById('editGuruJenis').value=u.jenisGuru||'kelas';
             document.getElementById('editGuruPass').value='';
-            document.getElementById('kepsekEditGuruModal').classList.remove('hidden');
+            document.getElementById('editGuruModal').classList.remove('hidden');
         };
-        window.closeEditGuruModal=()=>document.getElementById('kepsekEditGuruModal').classList.add('hidden');
+
         window.saveEditedGuru=async function(){
-            const u=document.getElementById('editGuruId').value;
-            const name=document.getElementById('editGuruName').value;
+            const uname=document.getElementById('editGuruId').value;
+            const fullname=document.getElementById('editGuruName').value.trim();
             const jenis=document.getElementById('editGuruJenis').value;
             const pass=document.getElementById('editGuruPass').value;
-            const upd={fullname:name,jenisGuru:jenis};
-            if(pass)upd.password=pass;
-            try{await update(ref(db,`users/${u}`),upd);showToast('Data guru diperbarui!');closeEditGuruModal();}catch(e){showToast('Gagal simpan','error');}
+            if(!fullname){showToast('Nama wajib diisi!','error');return;}
+            btnLoading('editGuruId',true);
+            try{
+                const upd={fullname,jenisGuru:jenis};if(pass)upd.password=pass;
+                await update(ref(db,`users/${uname}`),upd);showToast('Data guru berhasil diperbarui!');closeEditGuruModal();loadKepsekUsers();
+            }catch(err){showToast('Gagal: '+err.message,'error');}finally{btnLoading('editGuruId',false);}
         };
 
-        // PENGAWAS FUNCTIONS
-        function loadPengawasData(){
-            onValue(ref(db,'users'),(snapshot)=>{
-                const tb=document.getElementById('pengawasTableBody');tb.innerHTML='';
-                snapshot.forEach(child=>{
-                    const d=child.val();
-                    tb.innerHTML+=`<tr><td>${d.username}</td><td>${d.fullname}</td><td>${d.sekolah||'-'} (${d.npsn||'-'})</td></tr>`;
-                });
-            });
+        window.confirmDeleteGuru=function(uname,name){
+            document.getElementById('confirmTitle').textContent='Hapus Guru?';
+            document.getElementById('confirmMessage').textContent=`Apakah Anda yakin ingin menghapus guru "${name}"? Semua data pengajuan ATP guru ini juga akan dihapus secara permanen.`;
+            document.getElementById('confirmActionBtn').onclick=async function(){
+                closeConfirmModal();
+                try{
+                    await remove(ref(db,`users/${uname}`));
+                    await remove(ref(db,`submissions/${currentUser.npsn}/${uname}`));
+                    await remove(ref(db,`rpms/${currentUser.npsn}/${uname}`));
+                    showToast('Guru dan semua datanya berhasil dihapus!');loadKepsekUsers();loadKepsekWorkflow();
+                }catch(err){showToast('Gagal: '+err.message,'error');}
+            };
+            document.getElementById('confirmModal').classList.remove('hidden');
+        };
+
+        /* ===== PENGAWAS WORKFLOW ===== */
+        async function loadPengawasData(){
+            try{
+                const [usersSnap,subSnap]=await Promise.all([get(ref(db,'users')),get(ref(db,'submissions'))]);
+                const usersData=usersSnap.exists()?usersSnap.val():{};
+                const subData=subSnap.exists()?subSnap.val():{};
+                rawUsers=usersData;
+
+                // Statistik
+                let totalSekolah={},totalUsers=0,totalGuru=0,totalPending=0,totalApproved=0,totalRejected=0;
+                const sekolahList=[];
+                for(const uname in usersData){
+                    const u=usersData[uname];totalUsers++;
+                    if(u.role==='guru')totalGuru++;
+                    const npsn=u.npsn||'unknown';
+                    if(!totalSekolah[npsn])totalSekolah[npsn]={nama:u.sekolah||'?',npsn,guru:0,pending:0,approved:0,rejected:0};
+                    if(u.role==='guru')totalSekolah[npsn].guru++;
+                }
+                for(const npsn in subData){
+                    for(const uname in subData[npsn]){
+                        for(const sid in subData[npsn][uname]){
+                            const d=subData[npsn][uname][sid];
+                            if(d.status==='pending')totalPending++;
+                            if(d.status==='approved')totalApproved++;
+                            if(d.status==='rejected')totalRejected++;
+                            if(totalSekolah[npsn]){
+                                if(d.status==='pending')totalSekolah[npsn].pending++;
+                                if(d.status==='approved')totalSekolah[npsn].approved++;
+                                if(d.status==='rejected')totalSekolah[npsn].rejected++;
+                            }
+                        }
+                    }
+                }
+                sekolahList.push(...Object.values(totalSekolah));
+
+                document.getElementById('pengawasStats').innerHTML=`
+                    <div class="stat-card"><div class="stat-label">Total Sekolah</div><div class="stat-value">${sekolahList.length}</div></div>
+                    <div class="stat-card"><div class="stat-label">Total Pengguna</div><div class="stat-value">${totalUsers}</div></div>
+                    <div class="stat-card"><div class="stat-label">Total Guru</div><div class="stat-value">${totalGuru}</div></div>
+                    <div class="stat-card"><div class="stat-label">ATP Pending</div><div class="stat-value" style="color:var(--warning);">${totalPending}</div></div>
+                    <div class="stat-card"><div class="stat-label">ATP Disetujui</div><div class="stat-value" style="color:var(--success);">${totalApproved}</div></div>
+                    <div class="stat-card"><div class="stat-label">ATP Ditolak</div><div class="stat-value" style="color:var(--danger);">${totalRejected}</div></div>
+                `;
+
+                // Tabel Sekolah
+                const stb=document.getElementById('pengawasSekolahBody');let srows='';
+                sekolahList.forEach(s=>{srows+=`<tr><td>${escHtml(s.nama)}</td><td>${escHtml(s.npsn)}</td><td>${s.guru}</td><td><span style="color:var(--warning);font-weight:700;">${s.pending}</span></td><td><span style="color:var(--success);font-weight:700;">${s.approved}</span></td></tr>`;});
+                if(!srows)srows='<tr><td colspan="5"><div class="empty-state"><i class="fas fa-school"></i><p>Belum ada sekolah</p></div></td></tr>';
+                stb.innerHTML=srows;
+
+                // Filter sekolah untuk dropdown
+                const pwfs=document.getElementById('pwFilterSekolah');
+                let opts='<option value="">Semua Sekolah</option>';
+                sekolahList.forEach(s=>{opts+=`<option value="${s.npsn}">${escHtml(s.nama)}</option>`;});
+                pwfs.innerHTML=opts;
+
+                // Tabel Pengguna
+                const utb=document.getElementById('pengawasTableBody');let urows='';
+                for(const uname in usersData){
+                    const u=usersData[uname];
+                    const roleLabel=u.role==='guru'?jenisLabel(u.jenisGuru):u.role==='kepsek'?'Kepala Sekolah':'Pengawas';
+                    urows+=`<tr><td>${escHtml(u.fullname)}</td><td>${escHtml(u.username)}</td><td>${roleLabel}</td><td>${escHtml(u.sekolah||'-')}</td></tr>`;
+                }
+                if(!urows)urows='<tr><td colspan="4"><div class="empty-state"><i class="fas fa-users"></i><p>Belum ada pengguna</p></div></td></tr>';
+                utb.innerHTML=urows;
+
+                // Simpan subData untuk filter
+                window._pengawasSubData=subData;window._pengawasUsersData=usersData;
+                loadPengawasSubmissions();
+            }catch(err){console.error(err);}
         }
 
-        // Auto Login
-        window.onload=()=>{
-            const saved=localStorage.getItem('kosp_user');
-            if(saved){currentUser=JSON.parse(saved);initDashboard();}
-            else{showLogin();}
+        window.loadPengawasSubmissions=function(){
+            const subData=window._pengawasSubData||{};
+            const usersData=window._pengawasUsersData||{};
+            const filterSekolah=document.getElementById('pwFilterSekolah').value;
+            const filterStatus=document.getElementById('pwFilterStatus').value;
+            const container=document.getElementById('pengawasSubmissionsContainer');
+            let html='';
+
+            for(const npsn in subData){
+                if(filterSekolah&&npsn!==filterSekolah)continue;
+                for(const uname in subData[npsn]){
+                    for(const sid in subData[npsn][uname]){
+                        const d=subData[npsn][uname][sid];
+                        if(filterStatus&&d.status!==filterStatus)continue;
+                        const sekolahNama=d.sekolah||usersData[uname]?.sekolah||'-';
+                        let tpHtml='<ul class="approval-card-tp">';(d.tps||[]).forEach(tp=>{tpHtml+=`<li>${escHtml(tp.text)} <span class="tp-check-semester" style="margin-left:8px;">Sem ${tp.semester}</span></li>`;});tpHtml+='</ul>';
+                        html+=`<div class="approval-card"><div class="approval-card-header"><div class="approval-card-title">${escHtml(d.mapel)} - Kelas ${d.kelas}</div>${statusBadge(d.status)}</div><div class="approval-card-meta"><span><i class="fas fa-user"></i> ${escHtml(d.creatorName||uname)}</span><span><i class="fas fa-school"></i> ${escHtml(sekolahNama)}</span><span><i class="fas fa-tag"></i> ${jenisLabel(d.jenisGuru)}</span><span><i class="fas fa-clock"></i> ${d.timestamp?new Date(d.timestamp).toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'}):'-'}</span></div><div class="approval-card-section"><h4>Capaian Pembelajaran (CP)</h4><p>${escHtml(d.cp)}</p></div><div class="approval-card-section"><h4>Topik / Materi Pokok</h4><p>${escHtml(d.topik)}</p></div><div class="approval-card-section"><h4>Tujuan Pembelajaran (TP)</h4>${tpHtml}</div><div class="approval-card-section"><h4>Buku Sumber</h4><p>${escHtml(d.bukuSumber||'-')}</p></div>${d.status==='pending'?`<div class="approval-card-actions"><button class="btn btn-danger btn-sm" onclick="pengawasReject('${npsn}','${uname}','${sid}')"><i class="fas fa-times-circle"></i> TOLAK</button><button class="btn btn-success btn-sm" onclick="pengawasApprove('${npsn}','${uname}','${sid}')"><i class="fas fa-check-circle"></i> SETUJUI</button></div>`:''}</div>`;
+                    }
+                }
+            }
+            if(!html)html='<div class="empty-state"><i class="fas fa-inbox"></i><p>Tidak ada pengajuan yang cocok dengan filter</p></div>';
+            container.innerHTML=html;
         };
+
+        window.pengawasApprove=async function(npsn,uname,sid){
+            try{await update(ref(db,`submissions/${npsn}/${uname}/${sid}`),{status:'approved',approvedBy:currentUser.username,approvedAt:Date.now()});showToast('ATP berhasil disetujui!');loadPengawasData();}catch(err){showToast('Gagal: '+err.message,'error');}
+        };
+        window.pengawasReject=async function(npsn,uname,sid){
+            try{await update(ref(db,`submissions/${npsn}/${uname}/${sid}`),{status:'rejected',rejectedBy:currentUser.username,rejectedAt:Date.now()});showToast('ATP ditolak.','warn');loadPengawasData();}catch(err){showToast('Gagal: '+err.message,'error');}
+        };
+
+        /* ===== AUTO LOGIN ===== */
+        (async function(){
+            const saved=localStorage.getItem('kosp_user');
+            if(saved){try{currentUser=JSON.parse(saved);initDashboard();}catch(e){localStorage.removeItem('kosp_user');}}
+        })();
     </script>
 </body>
 </html>
